@@ -1,0 +1,105 @@
+//ajax snippet
+
+$("button").click(function(e) {
+    e.preventDefault();
+    $.ajax({
+        type: "POST",
+        url: "/pages/test/",
+        data: { 
+            id: $(this).val(), // < note use of 'this' here
+            access_token: $("#access_token").val() 
+        },
+        success: function(result) {
+            alert('ok');
+        },
+        error: function(result) {
+            alert('error');
+        }
+    });
+});
+
+
+//from open classroom
+$(function(){
+
+    $('#register').click(function() {
+        $('#myModal').modal();
+    });
+
+    $(document).on('submit', '#formRegister', function(e) {  
+        e.preventDefault();
+         
+        $('input+small').text('');
+        $('input').parent().removeClass('has-error');
+         
+        $.ajax({
+            method: $(this).attr('method'),
+            url: $(this).attr('action'),
+            data: $(this).serialize(),
+            dataType: "json"
+        })
+        .done(function(data) {
+            $('.alert-success').removeClass('hidden');
+            $('#myModal').modal('hide');
+        })
+        .fail(function(data) {
+            $.each(data.responseJSON, function (key, value) {
+                var input = '#formRegister input[name=' + key + ']';
+                $(input + '+small').text(value);
+                $(input).parent().addClass('has-error');
+            });
+        });
+    });
+
+})
+
+
+//from laravel sillo
+
+
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script>
+    $(() => {
+        $.ajaxSetup({
+            headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') }
+        })
+        function reset() {
+            $('#email').removeClass('input-invalid');
+            $('#message').removeClass('input-invalid');
+            $('legend').show();
+            $('span').html('');
+            $('.alert').hide();
+        }
+        $('#maform').submit((e) => {
+            let that = e.currentTarget;
+            e.preventDefault();
+            reset();
+            $('.pure-form-message').html('');
+            $.ajax({
+                method: $(that).attr('method'),
+                url: $(that).attr('action'),
+                data: $(that).serialize()
+            })
+            .done((data) => {
+                $('legend').hide();
+                $('.alert').show('slow');
+            })
+            .fail((data) => {
+                if(data.status == 422) {
+                    $.each(data.responseJSON.errors, function (i, error) {
+                        $('form')
+                            .find('[name="' + i + '"]')
+                            .addClass('input-invalid')
+                            .next()
+                            .append(error[0]);
+                    });
+                }
+            });
+        });
+        $('#open').on('click', (e) => {
+            reset();
+            $('input').val('');
+            $('textarea').val('');
+        });
+    });
+</script>
