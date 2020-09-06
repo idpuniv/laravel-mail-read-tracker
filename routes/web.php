@@ -26,3 +26,4 @@ Route::get('/mail/trash', 'HomeController@trash')->name('mail.trash');
 Route::get('/mail/received', 'HomeController@received')->name('mail.received');
 Route::get('/mail/create/{id?}', 'HomeController@create')->name('mail.create');
 Route::get('/mail/read/{id}', 'HomeController@read')->name('mail.read');
+Route::get('/test/printable', 'HomeController@test')->name('mail.test');

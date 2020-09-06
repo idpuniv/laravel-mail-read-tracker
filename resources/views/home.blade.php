@@ -74,6 +74,11 @@
                     <i class="far fa-circle text-primary"></i>
                     {{__('Social')}}
                   </a>
+                </li><li class="nav-item">
+                  <a href="{{route('mail.test')}}" class="nav-link" id="social-link">
+                    <i class="far fa-circle text-primary"></i>
+                    {{__('Test')}}
+                  </a>
                 </li>
               </ul>
             </div>
