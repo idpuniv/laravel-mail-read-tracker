@@ -120,6 +120,7 @@ class HomeController extends Controller
         
      try {
         //Server settings
+
         $mail->SMTPDebug = 2;                      // Enable verbose debug output
         $mail->isSMTP();                                            // Send using SMTP
         $mail->Host       = 'smtp.gmail.com';                    // Set the SMTP server to send through
@@ -148,7 +149,10 @@ class HomeController extends Controller
     // $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
         $body = $request->get('body');
         $track_code = md5(rand());
-        $body .= '<img src="{{route(blank, $track_code)}}" width="1" height="1" border="0" alt=""/>';
+        $base_url = 'https://cryptic-wave-76259.herokuapp.com/';
+        // $body .= '<img src="{{route(blank, $track_code)}}" width="1" height="1" border="0" alt=""/>';
+
+        $body .= '<img src="'.$base_url.'blank/'.$track_code.' width="1" height="1" border="0" alt=""/>';
         $mail->Body = $body;
         $mail->send(); //send the the mail
 
@@ -211,23 +215,33 @@ class HomeController extends Controller
     public function track(Request $request)
     {
 
-        $track_code = $request->route()->parameter('id');
-        $report = Report::where('track_code', $track_code)->first();
+        
         //$count = count($report);
-        if(!empty($report)) // tracked mail exists
+
+        if (!empty($_SERVER['REMOTE_ADDR'])) 
         {
-            $report->clics = $report->clics+1;
-            if($report->clics == 0) //mail has not opened yet
-            {
-                $report->open_date = Carbon::now(); //setting open date
-            }
-            $report->update();
+          
+          $track_code = $request->route()->parameter('id');
+          $report = Report::where('track_code', $track_code)->first();
+
+            if(!empty($report)) // tracked mail exists
+          {
+              $report->clics = $report->clics+1;
+              if($report->clics == 0) //mail has not opened yet
+              {
+                  $report->open_date = Carbon::now(); //setting open date
+              }
+              $report->update();
+
+          }
+          else // tracked mail dosen't exist(perhaps it has been droped)
+          {
+              $temp = 0;
+          }
 
         }
-        else // tracked mail dosen't exist(perhaps it has been droped)
-        {
-            $temp = 0;
-        }
+
+        
     }  
 
     public function sent()
