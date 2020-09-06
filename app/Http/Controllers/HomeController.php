@@ -273,7 +273,7 @@ class HomeController extends Controller
     {
       $reports = Report::all();
         foreach ($reports as $report) {
-          echo 'mail_id: '.$report ->email_id. ' code: '.$report->track_code. ' clics: '.$report->clics
+          echo 'mail_id: '.$report ->email_id. ' code: '.$report->track_code. ' clics: '.$report->clics;
         }
     }
 
