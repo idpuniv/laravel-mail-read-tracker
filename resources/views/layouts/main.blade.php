@@ -176,9 +176,7 @@
         </div>
         <div class="info">
           <a href="#" class="d-block">{{Auth::user()->name}}</a>
-          @admin
-          <!-- <a href="#" class="d-block">{{_('Administration')}}</a> -->
-          @endadmin
+          
         </div>
       </div>
 
