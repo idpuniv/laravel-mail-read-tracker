@@ -19,7 +19,7 @@ class CreateEmailsTable extends Migration
             $table->string('subject');
             $table->text('body');
             $table->char('status', 10)->nullable();
-            $table->enum('type', [null,'important', 'social', 'promotion'])->default(null);
+            $table->enum('type', ['important', 'social', 'promotion'])->nullable();
             $table->char('attachment', 100)->nullable();
             $table->timestamps();
         });
