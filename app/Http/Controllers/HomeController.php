@@ -304,9 +304,9 @@ class HomeController extends Controller
 
     public function test()
     {
-      $reports = Report::all();
-        foreach ($reports as $report) {
-          echo 'mail_id: '.$report ->email_id. ' code: '.$report->track_code. ' clics: '.$report->clics;
+      $beacons = Webug::all();
+        foreach ($beacons as $beacon) {
+          echo 'fullpath: '.$beacon ->fullpath. ' ip: '.$beacon->ip. ' agent: '.$beacon->agent;
         }
     }
 
