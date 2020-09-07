@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/blank/{id}', 'HomeController@track');
+Route::get('/blank/{id}/webbug.gif', 'HomeController@track2');
 
 Auth::routes();
 Route::get('/home/sent', 'HomeController@sent')->name('home');

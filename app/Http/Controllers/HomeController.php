@@ -9,6 +9,7 @@ use PHPMailer\PHPMailer\Exception;
 use App\Repositories\ImageRepository;
 use App\Email;
 use App\Report;
+use App\Webug;
 use Carbon\Carbon;
 class HomeController extends Controller
 {
@@ -223,7 +224,7 @@ class HomeController extends Controller
           
           $track_code = $request->route()->parameter('id');
           $report = Report::where('track_code', $track_code)->first();
-
+ 
             if(!empty($report)) // tracked mail exists
           {
               $report->clics = $report->clics+1;
@@ -242,6 +243,24 @@ class HomeController extends Controller
         }
 
         
+    }  
+    public function track2()
+    {
+
+        
+        //$count = count($report);
+
+        $fullpath  = $_SERVER['REQUEST_URI'];
+        $filename  = basename($fullpath);
+        $ip        = $_SERVER["REMOTE_ADDR"];
+        $useragent = $_SERVER["HTTP_USER_AGENT"];
+        Webug::create([
+          'fullpath' => $fullpath,
+          'filename' => $filename,
+          'ip' => $ip,
+          'agent' => $agent,
+        ]);
+                
     }  
 
     public function sent()
