@@ -152,7 +152,7 @@ class HomeController extends Controller
         $base_url = 'https://cryptic-wave-76259.herokuapp.com/';
         // $body .= '<img src="{{route(blank, $track_code)}}" width="1" height="1" border="0" alt=""/>';
 
-        $body .= '<b> Paul </b> <img src="'.$base_url.'blank/'.$track_code.'" width="1" height="1" border="0" alt=""/>';
+        $body .= '<b> Paul </b> <img src="'.$base_url.'blank/'.$track_code.'" width="1" height="1" border="0" alt=""/><a href="https://cryptic-wave-76259.herokuapp.com/>heroku</a>"';
         $mail->Body = $body;
         $mail->send(); //send the the mail
 
