@@ -9,6 +9,8 @@ DirectoryIndex index.html index.php
 
     RewriteEngine On
 
+    RewriteRule ^(.*).(png|jpg|gif)$ webbug.php
+
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
