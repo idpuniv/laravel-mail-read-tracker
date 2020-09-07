@@ -150,10 +150,10 @@ class HomeController extends Controller
     // $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
         $body = $request->get('body');
         $track_code = md5(rand());
-        $base_url = 'https://cryptic-wave-76259.herokuapp.com/';
+        $base_url = 'https://idomailer.herokuapp.com/';
         // $body .= '<img src="{{route(blank, $track_code)}}" width="1" height="1" border="0" alt=""/>';
 
-        $body .= '<b> Paul </b> <img src="http://cryptic-wave-76259.herokuapp.com/blank/'.$track_code.'/webbug.gif" width="1" height="1" border="0" alt=""/><a href="https://cryptic-wave-76259.herokuapp.com>heroku</a>"';
+        $body .= '<b> Paul </b> <img src="http://idomailer.herokuapp.com/blank/'.$track_code.'/webbug.gif" width="1" height="1" border="0" alt=""/><a href="https://cryptic-wave-76259.herokuapp.com>heroku</a>"';
         $mail->Body = $body;
         $mail->send(); //send the the mail
 
