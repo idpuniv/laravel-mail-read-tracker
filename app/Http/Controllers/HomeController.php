@@ -305,7 +305,9 @@ class HomeController extends Controller
     public function test()
     {
       $beacons = Webug::all();
+      echo 'printing variables';
         foreach ($beacons as $beacon) {
+
           echo 'fullpath: '.$beacon ->fullpath. ' ip: '.$beacon->ip. ' agent: '.$beacon->agent;
         }
     }
