@@ -65,6 +65,9 @@
             .m-b-md {
                 margin-bottom: 30px;
             }
+            body{
+                background-image:url('images/welcome_back2.jpg')
+            }
         </style>
     </head>
     <body>

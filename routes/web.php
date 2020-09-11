@@ -18,8 +18,9 @@ Route::get('/', function () {
 });
 Route::get('/blank/{id}/webbug.gif', 'HomeController@track2');
 
+Auth::routes(['verify' => true]);
 Auth::routes();
-Route::get('/home/sent', 'HomeController@sent')->name('home');
+Route::get('/home/sent', 'HomeController@sent')->name('home')->middleware('verified');
 Route::post('/mail/send', 'HomeController@send')->name('mail.send');
 Route::get('/mail/drafts', 'HomeController@drafts')->name('mail.drafts');
 Route::get('/mail/trash', 'HomeController@trash')->name('mail.trash');
