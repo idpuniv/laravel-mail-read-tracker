@@ -4,76 +4,8 @@
     <section class="content">
       <div class="container-fluid">
         <div class="row">
-          <div class="col-md-3">
-            <a href="{{route('home')}}" class="btn btn-primary btn-block mb-3">{{__('Back')}}</a>
-
-            <div class="card">
-              <div class="card-header">
-                <h3 class="card-title">{{__('Folders')}}</h3>
-
-                <div class="card-tools">
-                  <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
-                  </button>
-                </div>
-              </div>
-              <div class="card-body p-0">
-                <ul class="nav nav-pills flex-column">
-                  <li class="nav-item active">
-                    <a href="#" class="nav-link">
-                      <i class="fas fa-inbox"></i>{{__('Inbox')}}
-                      <span class="badge bg-primary float-right">12</span>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="{{route('home')}}" class="nav-link">
-                      <i class="far fa-envelope"></i> {{__('Sent')}}
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="{{route('mail.drafts')}}" class="nav-link">
-                      <i class="far fa-file-alt"></i> {{__('Drafts')}}
-                    </a>
-                  </li>
-                  
-                  <li class="nav-item">
-                    <a href="#" class="nav-link">
-                      <i class="far fa-trash-alt"></i> {{__('Trash')}}
-                    </a>
-                  </li>
-                </ul>
-              </div>
-              <!-- /.card-body -->
-            </div>
-            <!-- /.card -->
-            <div class="card">
-              <div class="card-header">
-                <h3 class="card-title">{{__('Labels')}}</h3>
-
-                <div class="card-tools">
-                  <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
-                  </button>
-                </div>
-              </div>
-              <!-- /.card-header -->
-              <div class="card-body p-0">
-                <ul class="nav nav-pills flex-column">
-                  <li class="nav-item">
-                    <a class="nav-link" href="#"><i class="far fa-circle text-danger"></i>{{__('Important')}}</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#"><i class="far fa-circle text-warning"></i>{{__('Promotions')}}</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#"><i class="far fa-circle text-primary"></i>{{__('Social')}}</a>
-                  </li>
-                </ul>
-              </div>
-              <!-- /.card-body -->
-            </div>
-            <!-- /.card -->
-          </div>
           <!-- /.col -->
-          <div class="col-md-9">
+          <div class="col-md-12">
             <div class="card card-primary card-outline">
               <div class="card-header">
                 <h3 class="card-title">{{__('Compose New Message')}}</h3>

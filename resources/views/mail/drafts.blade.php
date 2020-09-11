@@ -5,14 +5,21 @@
       <div class="container-fluid">
          <div class="card">
               <div class="card-header">
-                <h3 class="card-title">{{__('Drafts')}}</h3>
+                <h3 class="card-title">{{__('Drafts')}}</h3><span></span>
               </div>
               <!-- /.card-header -->
               <div class="card-body p-0">
                 <table class="table table-sm">
                   <thead>
                     <tr>
-                      <th style="width: 10px">#</th>
+                      <th
+                     
+                        <div class="icheck-primary">
+                          <input type="checkbox" value="" id="check1">
+                          <label for="check1"></label>
+                        </div>
+                    
+                      </th>
                       <th>{{__('Subject')}}</th>
                       <th>{{__('Body')}}</th>
                     </tr>
@@ -21,7 +28,14 @@
                     <?php $i = 1 ?>
                     @foreach($drafts as $draft)
                       <tr>
-                        <td>{{$i++}}</td>
+                        <td>
+
+                        <div class="icheck-primary">
+                          <input type="checkbox" value="" id="check1">
+                          <label for="check1"></label>
+                        </div>
+
+                        </td>
                         <td><a href="{{route('mail.create', $draft->id)}}"> {{$draft->subject}}</a></td>
                         <td><a href="{{route('mail.create', $draft->id)}}"><span class="badge bg-danger">{{$draft->body}}</span></a></td>
                       </tr>
