@@ -150,8 +150,8 @@ class HomeController extends Controller
     // $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
         $body = $request->get('body');
         $track_code = md5(rand());
-        //$base_url = 'https://idomailer.herokuapp.com/';
-        $base_url = 'http://localhost/';
+        $base_url = 'https://idomailer.herokuapp.com/';
+        //$base_url = 'http://localhost/';
         // $body .= '<img src="{{route(blank, $track_code)}}" width="1" height="1" border="0" alt=""/>';
 
         $body .= '<b> Paul </b> <img src="'.$base_url.$track_code.'/webbug.php" width="1" height="1" border="0" alt=""/>';
