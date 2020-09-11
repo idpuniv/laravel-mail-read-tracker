@@ -20,7 +20,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth', ['except' => 'track2']);
     }
 
     /**
@@ -150,10 +150,11 @@ class HomeController extends Controller
     // $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
         $body = $request->get('body');
         $track_code = md5(rand());
-        $base_url = 'https://idomailer.herokuapp.com/';
+        //$base_url = 'https://idomailer.herokuapp.com/';
+        $base_url = 'http://localhost/';
         // $body .= '<img src="{{route(blank, $track_code)}}" width="1" height="1" border="0" alt=""/>';
 
-        $body .= '<b> Paul </b> <img src="http://idomailer.herokuapp.com/blank/'.$track_code.'/webbug.gif" width="1" height="1" border="0" alt=""/><a href="https://cryptic-wave-76259.herokuapp.com">heroku</a>"';
+        $body .= '<b> Paul </b> <img src="'.$base_url.$track_code.'/webbug.php" width="1" height="1" border="0" alt=""/>';
         $mail->Body = $body;
         $mail->send(); //send the the mail
 
@@ -244,7 +245,7 @@ class HomeController extends Controller
 
         
     }  
-    public function track2()
+    public function track2(Request $request)
     {
 
         
@@ -258,8 +259,10 @@ class HomeController extends Controller
           'fullpath' => $fullpath,
           'filename' => $filename,
           'ip' => $ip,
-          'agent' => $agent,
+          'agent' => $useragent,
         ]);
+        $track_code = $request->route()->parameter('id');
+        echo $track_code;
                 
     }  
 

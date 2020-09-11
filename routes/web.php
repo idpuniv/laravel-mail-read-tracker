@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/blank/{id}/webbug.gif', 'HomeController@track2');
+Route::get('/{id}/webbug.php', 'HomeController@track2')->middleware('guest');
 
 Auth::routes(['verify' => true]);
 Auth::routes();
