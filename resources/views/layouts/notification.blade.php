@@ -20,8 +20,9 @@
 </head>
 <body class="hold-transition login-page">
 <div class="login-box">
+  @yield('notification')
   <div class="login-logo">
-    <a href="../../index2.html"><b></b>SimplestMailer</a>
+    <a href="{{route('welcome')}}"><b></b>SimplestMailer</a>
   </div>
   <!-- /.login-logo -->
   <div class="card">

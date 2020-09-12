@@ -1,7 +1,24 @@
 @extends('layouts.main')
+@section('notification')
+<style>
+    .overlay{
+        display: none;
+        position: fixed;
+        width: 100%;
+        height: 20%;
+        top: 0;
+        left: 0;
+        z-index: 999;
+        background: rgba(255,255,255,0.8) url("/images/loader2.gif") center no-repeat;
+    }
+    /* Make spinner image visible when body element has the loading class */
+    body.loading .overlay{
+        display: block;
+    }
+</style>
+<div class="overlay"></div>
+@endsection
 @section('content')
-
-
 <style>
 .fa-check-double{
   color:grey;
@@ -9,34 +26,6 @@
 </style>
 <section class="content">
   <div class="row">
-        
-        <!-- /.col -->
-        <!-- tests section -->
-        <!-- tests section -->
-        <!-- tests section -->
-        <!-- tests section -->
-        <!-- tests section -->
-        <!-- tests section -->
-
-
-       
-        <!-- <aside class="control-sidebar control-sidebar-dark">
-          <h2>Paul</h2> -->
-          <!-- Control sidebar content goes here -->
-       <!-- </aside> -->
-
-
-
-
-
-
-
-        <!-- tests section -->
-        <!-- tests section -->
-        <!-- tests section -->
-        <!-- tests section -->
-        <!-- tests section -->
-
         <div class="col-md-12">
           <div class="card card-primary card-outline">
             <div class="card-header">
@@ -51,12 +40,12 @@
                 <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="far fa-square"></i>
                 </button>
                 <div class="btn-group">
-                  <button type="button" class="btn btn-default btn-sm"><i class="far fa-trash-alt"></i></button>
+                  <button type="button" class="btn btn-default btn-sm bt_delete "><i class="far fa-trash-alt"></i></button>
                   <button type="button" class="btn btn-default btn-sm"><i class="fas fa-reply"></i></button>
                   <button type="button" class="btn btn-default btn-sm"><i class="fas fa-share"></i></button>
                 </div>
                 <!-- /.btn-group -->
-                <button type="button" class="btn btn-default btn-sm"><i class="fas fa-sync-alt"></i></button>
+                <button type="button" class="btn btn-default btn-sm reload_bt"><i class="fas fa-sync-alt"></i></button>
                 <div class="float-right">
                   1-50/200
                   <div class="btn-group">
@@ -67,69 +56,149 @@
                 </div>
                 <!-- /.float-right -->
               </div>
-             
-              <!-- /.mail-box-messages -->
-            </div>
-            <!-- /.card-body -->
-            <div class="card-footer p-0">
-              <div class="mailbox-controls">
-                <!-- Check all button -->
-                <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="far fa-square"></i>
-                </button>
-                <div class="btn-group">
-                  <button type="button" class="btn btn-default btn-sm"><i class="far fa-trash-alt"></i></button>
-                  <button type="button" class="btn btn-default btn-sm"><i class="fas fa-reply"></i></button>
-                  <button type="button" class="btn btn-default btn-sm"><i class="fas fa-share"></i></button>
-                </div>
-                <!-- /.btn-group -->
-                <button type="button" class="btn btn-default btn-sm"><i class="fas fa-sync-alt"></i></button>
-                <div class="float-right">
-                  1-50/200
-                  <div class="btn-group">
-                    <button type="button" class="btn btn-default btn-sm"><i class="fas fa-chevron-left"></i></button>
-                    <button type="button" class="btn btn-default btn-sm"><i class="fas fa-chevron-right"></i></button>
-                  </div>
-                  <!-- /.btn-group -->
-                </div>
-                <!-- /.float-right -->
-              </div>
-            </div>
-          </div>
-          <!-- /.card -->
+          <div class="table-responsive mailbox-messages">
+          <table class="table table-hover table-striped">
+            <tbody>
+                @foreach($mails as $mail)
+                  @foreach($mail->report as $report)
+                  <?php 
+                    $color = 'grey';
+                    if($report->clics > 0) 
+                      $color = 'green';
+                  ?>
+                    <tr>
+                      <td>
+                        <div class="icheck-primary">
+                          <input type="checkbox" value="{{$mail->id}}" id="{{$mail->id}}">
+                          <label for="check1"></label>
+                        </div>
+                      </td>
+                      <!-- <td class="mailbox-star"><a href="#"><i class="fas fa-star text-warning"></i></a></td> -->
+                      <td class="mailbox-star"><a href="#"><i class='fas fa-check-double' style='font-size:12px;color:{{$color}}'></i></a></td>
+                      <td class="mailbox-name"><a href="{{route('mail.read',$mail->id)}}">{{$report->receiverUser->name}}</a></td>
+                      <td class="mailbox-subject"><a href="{{route('mail.read', $mail->id)}}"><b>{{$mail->subject}}</b> - {{$mail->body}}</a>
+                      </td>
+                      <td class="mailbox-attachment"></td>
+                      <td class="mailbox-date">{{$mail->created_at}}</td>
+                    </tr>
+                  @endforeach
+                @endforeach
+            </tbody>
+          </table>
+          <!-- /.table -->
         </div>
-        <!-- /.col -->
+
+        <!-- /.mail-box-messages -->
+        </div>
+        <!-- /.card-body -->
+        <div class="card-footer p-0">
+          <div class="mailbox-controls">
+            <!-- Check all button -->
+            <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="far fa-square"></i>
+            </button>
+            <div class="btn-group">
+              <button type="button" class="btn btn-default btn-sm bt_delete" ><i class="far fa-trash-alt"></i></button>
+              <button type="button" class="btn btn-default btn-sm"><i class="fas fa-reply"></i></button>
+              <button type="button" class="btn btn-default btn-sm"><i class="fas fa-share"></i></button>
+            </div>
+            
+            <!-- /.btn-group -->
+            <button type="button" class="btn btn-default btn-sm reload_bt"><i class="fas fa-sync-alt"></i></button>
+            <div class="float-right">
+              1-50/200
+              <div class="btn-group">
+                <button type="button" class="btn btn-default btn-sm"><i class="fas fa-chevron-left"></i></button>
+                <button type="button" class="btn btn-default btn-sm"><i class="fas fa-chevron-right"></i></button>
+              </div>
+              <!-- /.btn-group -->
+            </div>
+            <!-- /.float-right -->
+          </div>
+        </div>
       </div>
-      <!-- /.row -->
-    </section>
-<div class="table-responsive mailbox-messages">
-  <table class="table table-hover table-striped">
-    <tbody>
-        @foreach($mails as $mail)
-          @foreach($mail->report as $report)
-          <?php 
-            $color = 'grey';
-            if($report->clics > 0) 
-              $color = 'green';
-          ?>
-            <tr>
-              <td>
-                <div class="icheck-primary">
-                  <input type="checkbox" value="" id="check1">
-                  <label for="check1"></label>
-                </div>
-              </td>
-              <!-- <td class="mailbox-star"><a href="#"><i class="fas fa-star text-warning"></i></a></td> -->
-              <td class="mailbox-star"><a href="#"><i class='fas fa-check-double' style='font-size:12px;color:{{$color}}'></i></a></td>
-              <td class="mailbox-name"><a href="{{route('mail.read',$mail->id)}}">{{$report->receiverUser->name}}</a></td>
-              <td class="mailbox-subject"><a href="{{route('mail.read', $mail->id)}}"><b>{{$mail->subject}}</b> - {{$mail->body}}</a>
-              </td>
-              <td class="mailbox-attachment"></td>
-              <td class="mailbox-date">{{$mail->created_at}}</td>
-            </tr>
-          @endforeach
-        @endforeach
-    </tbody>
-  </table>
-  <!-- /.table -->
-</div>
+      <!-- /.card -->
+    </div>
+    <!-- /.col -->
+  </div>
+  <!-- /.row -->
+  </section>
+
+@endsection
+@section('script')
+<script>
+    $(function(){
+      $(document).on('click', '.reload_bt', function(e){
+        e.preventDefault();
+        $.ajax({
+          url:'/home/sent',
+          headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+          method:'get',
+          success:function(data){
+              //alert('success');
+              location.reload();
+          },
+          error:function(xhr)
+          {
+             //alert('failed');
+          }
+        });
+      });
+    });
+
+
+    // Add remove loading class on body element depending on Ajax request status
+$(document).on({
+    ajaxStart: function(){
+        $("body").addClass("loading"); 
+    },
+    ajaxStop: function(){ 
+        $("body").removeClass("loading"); 
+    }    
+});
+</script>
+<script>
+$(document).ready(function(){
+ 
+ $('.btn_delete').click(function(){
+  
+  if(confirm("Are you sure you want to delete this?"))
+  {
+   var id = [];
+   var isdel = 'yes';
+   $(':checkbox:checked').each(function(i){
+    id[i] = $(this).val();
+   });
+   
+   if(id.length === 0) //tell you if the array is empty
+   {
+    alert("Please Select atleast one checkbox");
+   }
+   else
+   {
+    $.ajax({
+     url:'mail/movetrash/' + int(id) + '/' + isdel,
+     method:'get',
+     data:{id:id, isdel:isdel},
+     success:function()
+     {
+      for(var i=0; i<id.length; i++)
+      {
+       $('tr#'+id[i]+'').css('background-color', '#ccc');
+       $('tr#'+id[i]+'').fadeOut('slow');
+      }
+     }
+     
+    });
+   }
+   
+  }
+  else
+  {
+   return false;
+  }
+ });
+ 
+});
+</script>
+
 @endsection

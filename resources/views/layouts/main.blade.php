@@ -102,23 +102,27 @@
   <aside class="main-sidebar sidebar-dark-primary elevation-4 sidebar-no-collapse">
     <!-- Brand Logo -->
     <a href="{{route('home')}}" class="brand-link">
-      <img src=" {{asset('dist/img/AdminLTELogo.png')}}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+      <img src=" {{asset('images/slogo.png')}}" alt="SimplestMailer Logo" class="brand-image img-circle elevation-3"
            style="opacity: .8">
       <span class="brand-text font-weight-light">Simplestmailer</span>
     </a>
 
     <style>
+      #new-email{
+        background-color:#007bff;
+        text-align:center;
+        padding-right:0px;
+        padding-left:10px;
+      }
     </style>
     <!-- Sidebar -->
     <div class="sidebar">
       <!-- Sidebar user panel (optional) -->
-      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+      <div class="user-panel mt-3 pb-3 mb-3 d-flex" id="new-email">
         <div class="image d-block">
-          <i class="fas fa-plus"></i>
         </div>
-        <div class="info">
+        <div class="info" >
           <a href="{{route('mail.create')}}" class="d-block active">{{__('New Message')}}</a>
-          
         </div>
       </div>
 
@@ -195,7 +199,6 @@
       <b>Version</b> 1.0
     </div>
   </footer>
-
   <script src="{{asset('plugins/jquery/jquery.min.js')}}"></script>
 
   <script src="{{asset('plugins/jquery-ui/jquery-ui.min.js')}}"></script>

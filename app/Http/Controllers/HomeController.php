@@ -315,4 +315,31 @@ class HomeController extends Controller
         }
     }
 
+    public  function delete(Request $request, $id)
+    {
+      $email = Email::find($id);
+      if($email->delete())
+      {
+        return view('home', $request->session()->flash('status', 'supprimer avec succes'));
+      }
+      else
+      {
+         return view('home', $request->session()->flash('failed', 'echec'));
+      }
+    }
+
+    public  function move_to_trash(Request $request, $id, $isdel)
+    {
+      $email = Email::find($id);
+      $email->isdel = $isdel;
+      if($email->update())
+      {
+        return view('home', $request->session()->flash('status', 'mis à la corbeille'));
+      }
+      else
+      {
+         return view('home', $request->session()->flash('failed', 'echec'));
+      }
+    }
+
 }

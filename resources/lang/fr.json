@@ -90,5 +90,6 @@
     "Sent Succes": "Envoyé",
     "Sent Failed": "Echec de l'envoi",
     "Body": "Corps",
-    "Failure": "Echec"
+    "Failure": "Echec",
+    "Change password": "Modifier le mot de passe"
 }
