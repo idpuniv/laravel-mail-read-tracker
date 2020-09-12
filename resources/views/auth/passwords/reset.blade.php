@@ -18,7 +18,7 @@
           </div>
         </div>
         <div class="input-group mb-3">
-          <input type="password" class="form-control" placeholder="{{__('Password')}}" required autocomplete="new-password">
+          <input type="password" class="form-control" name="password"  placeholder="{{__('Password')}}" required>
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-lock"></span>
@@ -26,7 +26,7 @@
           </div>
         </div>
         <div class="input-group mb-3">
-          <input type="password" class="form-control" name="password_confirmation" required autocomplete="new-password" placeholder="{{__('Confirm Password')}}">
+          <input type="password" class="form-control" name="password_confirmation" id="password-confirme"  placeholder="{{__('Confirm Password')}}" required>
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-lock"></span>
