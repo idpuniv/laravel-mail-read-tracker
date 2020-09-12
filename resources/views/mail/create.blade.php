@@ -1,4 +1,12 @@
 @extends('layouts.main')
+
+@section('style')
+<link href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}" rel="stylesheet"> 
+<link href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet">
+<link href="{{ asset('dist/css/adminlte.min.css') }}" rel="stylesheet">
+<link href="{{ asset('plugins/summernote/summernote-bs4.css') }}" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+@endsection
 @section('content')
     <!-- Main content -->
     <section class="content">
@@ -62,7 +70,7 @@
   @section('notification')
     @if(Session::has('success'))
     <div class="alert alert-success alert-dismissible hidden">
-       {{__(Session::get('succes'))}}!!
+       {{__(Session::get('success'))}}!!
     </div>
     @endif
 
@@ -72,7 +80,15 @@
     </div>
     @endif
   @endsection
+
   @section('script')
+
+  <script src="{{asset('plugins/jquery/jquery.min.js')}}"></script>
+  <script src="{{asset('plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+  <script src="{{asset('dist/js/adminlte.min.js')}}"></script>
+  <script src="{{asset('dist/js/demo.js')}}"></script>
+  <script src="{{asset('plugins/summernote/summernote-bs4.min.js')}}"></script>
+
   <script>
     window.setTimeout(function() {
     $(".alert").fadeTo(500, 0).slideUp(500, function(){

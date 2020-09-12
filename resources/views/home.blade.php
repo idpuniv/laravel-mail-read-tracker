@@ -1,4 +1,14 @@
 @extends('layouts.main')
+
+@section('style')
+
+<link href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}" rel="stylesheet"> 
+<link href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet">
+<link href="{{ asset('plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}" rel="stylesheet">
+<link href="{{ asset('dist/css/adminlte.min.css') }}" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+@endsection
 @section('notification')
 <style>
     .overlay{
@@ -59,18 +69,20 @@
           <div class="table-responsive mailbox-messages">
           <table class="table table-hover table-striped">
             <tbody>
+                <?php $i = 0;?>
                 @foreach($mails as $mail)
                   @foreach($mail->report as $report)
                   <?php 
                     $color = 'grey';
                     if($report->clics > 0) 
                       $color = 'green';
+                      $checkbox_id = 'check'. strval(++$i);
                   ?>
                     <tr>
                       <td>
                         <div class="icheck-primary">
-                          <input type="checkbox" value="{{$mail->id}}" id="{{$mail->id}}">
-                          <label for="check1"></label>
+                          <input type="checkbox" value="{{$mail->id}}" id="{{$checkbox_id}}">
+                          <label for="{{$checkbox_id}}"></label>
                         </div>
                       </td>
                       <!-- <td class="mailbox-star"><a href="#"><i class="fas fa-star text-warning"></i></a></td> -->
@@ -124,39 +136,92 @@
   </section>
 
 @endsection
+
+
 @section('script')
+
+<script src="{{asset('plugins/jquery/jquery.min.js')}}"></script>
+<script src="{{asset('plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+<script src="{{asset('dist/js/adminlte.min.js')}}"></script>
+
 <script>
-    $(function(){
-      $(document).on('click', '.reload_bt', function(e){
-        e.preventDefault();
-        $.ajax({
-          url:'/home/sent',
-          headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-          method:'get',
-          success:function(data){
-              //alert('success');
-              location.reload();
-          },
-          error:function(xhr)
-          {
-             //alert('failed');
-          }
-        });
+
+  $(function () {
+    //Enable check and uncheck all functionality
+    $('.checkbox-toggle').click(function () {
+      var clicks = $(this).data('clicks')
+      if (clicks) {
+        //Uncheck all checkboxes
+        $('.mailbox-messages input[type=\'checkbox\']').prop('checked', false)
+        $('.checkbox-toggle .far.fa-check-square').removeClass('fa-check-square').addClass('fa-square')
+      } else {
+        //Check all checkboxes
+        $('.mailbox-messages input[type=\'checkbox\']').prop('checked', true)
+        $('.checkbox-toggle .far.fa-square').removeClass('fa-square').addClass('fa-check-square')
+      }
+      $(this).data('clicks', !clicks)
+    })
+
+    //Handle starring for glyphicon and font awesome
+    $('.mailbox-star').click(function (e) {
+      e.preventDefault()
+      //detect type
+      var $this = $(this).find('a > i')
+      var glyph = $this.hasClass('glyphicon')
+      var fa    = $this.hasClass('fa')
+
+      //Switch states
+      if (glyph) {
+        $this.toggleClass('glyphicon-star')
+        $this.toggleClass('glyphicon-star-empty')
+      }
+
+      if (fa) {
+        $this.toggleClass('fa-star')
+        $this.toggleClass('fa-star-o')
+      }
+    })
+  })
+</script>
+
+<script>
+  //send ajax reload request
+  $(function(){
+    $(document).on('click', '.reload_bt', function(e){
+      e.preventDefault();
+      $.ajax({
+        url:'/home/sent',
+        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+        method:'get',
+        success:function(data){
+            //alert('success');
+            location.reload();
+        },
+        error:function(xhr)
+        {
+            //alert('failed');
+        }
       });
     });
+  });
+</script>
 
-
-    // Add remove loading class on body element depending on Ajax request status
+<script>
+//handle loader while reloading
+// Add remove loading class on body element depending on Ajax request status
 $(document).on({
-    ajaxStart: function(){
-        $("body").addClass("loading"); 
-    },
-    ajaxStop: function(){ 
-        $("body").removeClass("loading"); 
-    }    
+  ajaxStart: function(){
+      $("body").addClass("loading"); 
+  },
+  ajaxStop: function(){ 
+      $("body").removeClass("loading"); 
+  }    
 });
 </script>
+
 <script>
+  // ajax for delete purpose
+
 $(document).ready(function(){
  
  $('.btn_delete').click(function(){
@@ -200,5 +265,5 @@ $(document).ready(function(){
  
 });
 </script>
-
+<script src="{{asset('dist/js/demo.js')}}"></script>
 @endsection
