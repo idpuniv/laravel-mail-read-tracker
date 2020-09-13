@@ -36,10 +36,7 @@
                 </div>
                 <!-- /.col -->
                 <div class="col-sm-4 invoice-col">
-                  Nombre de clics total
-                  <address>
-                    <strong>45</strong><br>
-                  </address>
+              
                 </div>
                 <!-- /.col -->
                 <div class="col-sm-4 invoice-col">
