@@ -55,6 +55,7 @@
                       <!-- <th>{{__('First Name')}}</th> -->
                       <th>{{__('Email')}}</th>
                       <th>{{__('Open Count')}}</th>
+                      <th>{{__('First Time Open Date')}}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -63,6 +64,7 @@
                       <!-- <td>455-981-221</td> -->
                       <td>{{$report->receiver_addr}}</td>
                       <td>{{$report->clics}}</td>
+                      <td>{{$report->open_date}}</td>
                     </tr>
                     <tr>
                     </tbody>
