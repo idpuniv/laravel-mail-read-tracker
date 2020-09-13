@@ -16,21 +16,47 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 })->name('welcome');
+
+
+
+Route::get('/category', 'CategoryController@index');
+
+Route::get('/category/{id}', ['as'=>'category.destroy','uses'=>'CategoryController@destroy']);
+
+Route::get('/delete-multiple-category', ['as'=>'category.multiple-delete','uses'=>'CategoryController@deleteMultiple']);
+Route::get('file','FileController@create');
+Route::post('file','FileController@store');
+
+Route::get('/upload-image', 'UploadController@getUploadForm');
+Route::post('/upload-image', 'UploadController@postUploadForm');
+
+Route::get('multiple-file-upload', 'MultipleUploadController@index');
+
+Route::post('multiple-file-upload/upload', 'MultipleUploadController@upload')->name('upload');
+
+
+// Create image upload form
+Route::get('/image-upload', 'FileUpload@createForm');
+
+// Store image
+Route::post('/image-upload', 'FileUpload@fileUpload')->name('imageUpload');
+
 Route::get('/{id}/webbug.php', 'HomeController@track');
 Route::get('/mail/test', 'HomeController@test')->name('test');
+Route::post('/upload', 'CategoryController@upload')->name('upload');
 Auth::routes(['verify' => true]);
 Auth::routes();
 
 Route::middleware(['verified'])->group(function(){
     Route::get('/home/sent', 'HomeController@sent')->name('home');
-    Route::put('/home/test', 'HomeController@test')->name('test');
     Route::get('/mail/movetrash/{id}/{isdel}', 'HomeController@softDelete')->name('mail.trash');
     Route::post('/mail/send', 'HomeController@send')->name('mail.send');
     Route::get('/mail/drafts', 'HomeController@drafts')->name('mail.drafts');
     Route::get('/mail/trash', 'HomeController@trash')->name('mail.trash');
-    Route::get('/mail/received', 'HomeController@received')->name('mail.received');
+    Route::get('/mail/inbox', 'HomeController@received')->name('mail.inbox');
     Route::get('/mail/create/{id?}', 'HomeController@create')->name('mail.create');
     Route::get('/mail/read/{id}', 'HomeController@read')->name('mail.read');
-    Route::get('/mail/delete/{id}', 'HomeController@delete')->name('mail.delete');
+    Route::post('/mail/delete', 'HomeController@softDelete')->name('mail.delete');
+    Route::get('/mail/report', 'HomeController@report')->name('mail.report');
     Route::get('/test/printable', 'HomeController@test')->name('mail.test');
 });

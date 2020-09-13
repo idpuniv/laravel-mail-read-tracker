@@ -325,30 +325,32 @@ class HomeController extends Controller
 
     
 
-    public  function softDelete(Request $request, $id, $isdel)
-    {
-      $email = Email::find($id);
-      if($email->delete())
-      {
-        return response()->json(['succes' => 'Deleted']);
-      }
-      else
-      {
-         return response()->json(['failed' => 'Failed']);
-      }
-    }
+    public function softDelete(Request $request){
 
-    public  function forceDelete(Request $request, $id)
-    {
-      $email = Email::find($id);
-      if($email->forceDelete())
-      {
-        return view('home', $request->session()->flash('status', 'supprimer avec succes'));
+         Email::whereIn('id',explode(",",$request->get('data')))->delete();
+         return view('home', ['mails'=>Auth()->user()->sent,'box_name' => 'OutBox']);   
+
       }
-      else
-      {
-         return view('home', $request->session()->flash('failed', 'echec'));
-      }
-    }
+
+
+      public function forceDelete(Request $request){
+
+        echo "OK";
+        // $ids = $request->ids;
+  
+        // if(Email::whereIn('id',explode(",",$ids))->forceDelete())
+
+        //      return response()->json(['status'=>true,'message'=>"Category deleted successfully."]);   
+        // else
+        //      return response()->json(['status'=>false,'message'=>"Category deleted successfully."]);   
+  
+        }
+      public function report(Request $request){
+  
+            return view('report');  
+     
+  
+        }
+
 
 }
