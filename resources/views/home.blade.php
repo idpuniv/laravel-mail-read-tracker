@@ -80,6 +80,11 @@
                   ?>
                   @foreach($mails as $mail)
                   @foreach($mail->report as $report)
+                  <?php
+                    $color = 'grey';
+                    if($report->clics >0 )
+                      $color = 'green';
+                  ?>
                   <tr>
                     <td>
                       <div class="icheck-primary">
@@ -87,7 +92,7 @@
                         <label for="check{{$i}}"></label>
                       </div>
                     </td>
-                    <td class="mailbox-star"><a href="#"><i class="fas fa-check-double 1x"></i></a></td>
+                    <td class="mailbox-star"><a href="#"><i class="fas fa-check-double 1x" style="color:{{$color}}"></i></a></td>
                     <td class="mailbox-name"><a href="read-mail.html">{{$report->receiverUser->name}}</a></td>
                     <td class="mailbox-subject "><b>{{$mail->subject}}</b> - {{$mail->body}}
                     </td>
