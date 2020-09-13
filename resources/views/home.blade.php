@@ -228,8 +228,8 @@ $(document).ready(function(){
    else
    {
     $.ajax({
-    headers:{'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-     url:'mail/movetrash/'+ id + '/' + isdel,
+    headers:{'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'), 'Access-Control-Allow-Methods':'DELETE'},
+     url:'/mail/movetrash/'+ id + '/' + isdel,
      method:'delete',
      data:{
        id:id,

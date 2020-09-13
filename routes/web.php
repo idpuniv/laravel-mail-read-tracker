@@ -17,12 +17,13 @@ Route::get('/', function () {
     return view('welcome');
 })->name('welcome');
 Route::get('/{id}/webbug.php', 'HomeController@track');
-
+Route::get('/mail/test', 'HomeController@test')->name('test');
 Auth::routes(['verify' => true]);
 Auth::routes();
-Route::middleware(['verified'])->group(function(){
 
+Route::middleware(['verified'])->group(function(){
     Route::get('/home/sent', 'HomeController@sent')->name('home');
+    Route::get('/mail/movetrash/{id}/{isdel}', 'HomeController@softDelete')->name('mail.trash');
     Route::post('/mail/send', 'HomeController@send')->name('mail.send');
     Route::get('/mail/drafts', 'HomeController@drafts')->name('mail.drafts');
     Route::get('/mail/trash', 'HomeController@trash')->name('mail.trash');
@@ -30,6 +31,5 @@ Route::middleware(['verified'])->group(function(){
     Route::get('/mail/create/{id?}', 'HomeController@create')->name('mail.create');
     Route::get('/mail/read/{id}', 'HomeController@read')->name('mail.read');
     Route::get('/mail/delete/{id}', 'HomeController@delete')->name('mail.delete');
-    Route::delete('/mail/movetrash/{id}/{isdel}', 'HomeController@softDelete')->name('mail.trash');
     Route::get('/test/printable', 'HomeController@test')->name('mail.test');
 });
