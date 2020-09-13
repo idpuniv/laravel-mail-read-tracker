@@ -130,13 +130,13 @@ class HomeController extends Controller
         $mail->Password   = 'IdP#i@gm.com95@';                               // SMTP password
         $mail->SMTPSecure = 'tls';         // Enable TLS enryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
         $mail->Port       = 587;                                    // TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
-        $mail->smtpConnect([
-          'ssl' => [
-              'verify_peer' => false,
-              'verify_peer_name' => false,
-              'allow_self_signed' => true
-          ]
-      ]);
+        // $mail->smtpConnect([
+        //   'ssl' => [
+        //       'verify_peer' => false,
+        //       'verify_peer_name' => false,
+        //       'allow_self_signed' => true
+          //]
+      //]);
 
         //Recipients
         $mail->setFrom('paulido92@gmail.com');
