@@ -1,13 +1,41 @@
 @extends('layouts.main')
+
 @section('style')
+
 <link href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}" rel="stylesheet"> 
 <link href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet">
+<link href="{{ asset('plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}" rel="stylesheet">
 <link href="{{ asset('dist/css/adminlte.min.css') }}" rel="stylesheet">
-<link href="{{ asset('plugins/summernote/summernote-bs4.css') }}" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 @endsection
+<meta name="csrf-token" content="{{csrf_token()}}">
+@section('notification')
+<style>
+    .overlay{
+        display: none;
+        position: fixed;
+        width: 100%;
+        height: 20%;
+        top: 0;
+        left: 0;
+        z-index: 999;
+        background: rgba(255,255,255,0.8) url("/images/loader2.gif") center no-repeat;
+    }
+    /* Make spinner image visible when body element has the loading class */
+    body.loading .overlay{
+        display: block;
+    }
+</style>
+<div class="overlay"></div>
+@endsection
 @section('content')
-    <!-- Main content -->
+<style>
+.fa-check-double{
+  color:grey;
+}
+</style>
+
+ <!-- Main content -->
  <section class="content">
       <div class="row">
         <!-- /.col -->
@@ -54,16 +82,13 @@
                   <tr>
                     <td>
                       <div class="icheck-primary">
-                        <input type="checkbox" class="checkbox" value="" id="check{{++$i}}" data-id="">
+                        <input type="checkbox" class="checkbox" value="" id="check{{++$i}}" data-id="{{$draft->id}}">
                         <label for="check{{$i}}"></label>
                       </div>
                     </td>
-                    <td class="mailbox-star"><a href="#"><i class="fas fa-star text-warning"></i></a></td>
-                    <td class="mailbox-name"><a href="read-mail.html">{{$draft->subject}}</a></td>
-                    <td class="mailbox-subject "><b>{{$draft->body}}
-                    </td>
-                    <td class="mailbox-attachment"><i class="fas fa-paperclip"></i></td>
-                    <td class="mailbox-date">5 mins ago</td>
+                    <td class="mailbox-subject email-truncated"><b>{{$draft->subject}}</b> - {{$draft->body}}</td>
+                    <td class="mailbox-attachment"></td>
+                    <td class="mailbox-date">{{$draft->created_at}}</td>
                   </tr>
                   @endforeach
                   </tbody>
@@ -102,10 +127,15 @@
         <!-- /.col -->
       </div>
       <!-- /.row -->
+      <form id="delform" method="POST" action="{{route('mail.delete')}}">
+         @csrf
+         <input type="hidden" name="data" id="data" value="">
+      </form>
     </section>
 
-  @endsection
-  
+@endsection
+
+
 @section('script')
 
 <script src="{{asset('plugins/jquery/jquery.min.js')}}"></script>
@@ -189,9 +219,6 @@ $(document).on({
 //  handle checkbox and mail delete
 
     $(document).ready(function () {
-
-         
-
         $('.btn-delete').on('click', function(e) {
 
             var idsArr = [];  
@@ -213,50 +240,10 @@ $(document).on({
             }  else {  
 
 
-                if(confirm("Are you sure, you want to delete the selected categories?")){  
-
-                    var strIds = idsArr.join(","); 
-
-                    $.ajax({
-
-                        url: "/mail/delete",
-
-                        type: 'GET',
-
-                        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-
-                        data: 'ids='+strIds,
-
-                        success: function (data) {
-
-                            if (data['status']==true) {
-
-                                $(".checkbox:checked").each(function() {  
-
-                                    $(this).parents("tr").remove();
-
-                                });
-
-                                alert(data['message']);
-
-                            } else {
-
-                                alert('Whoops Something went wrong!!');
-
-                            }
-
-                        },
-
-                        error: function (data) {
-
-                            alert(data.responseText);
-
-                        }
-
-                    });
-
-
-
+                if(confirm("Are you sure, you want to delete the selected categories?"))
+                {  
+                   $('#data').attr('value', idsArr);
+                   $('#delform').submit();
                 }  
 
             }  

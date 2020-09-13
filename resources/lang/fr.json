@@ -92,5 +92,10 @@
     "Body": "Corps",
     "Failure": "Echec",
     "Change password": "Modifier le mot de passe",
-    "Recover Password": "Recuperation de mot passe"
+    "Recover Password": "Recuperation de mot passe",
+    "Open email report": "Rapport des emails envoyés",
+    "Last Name": "Nom",
+    "Firs Name": "Prenom",
+    "Open Count": "Nombre d'ouverture",
+    "Print": "Imprimer"
 }

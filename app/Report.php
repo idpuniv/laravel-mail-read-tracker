@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use \App\Email;
 
 class Report extends Model
 {
@@ -16,6 +17,11 @@ class Report extends Model
 public function receiverUser()
 {
 	return $this->belongsTo(User::class, 'receiver_addr', 'email');
+}
+
+public function email()
+{
+    return $this->belongsTo(Email::class);
 }
 
 

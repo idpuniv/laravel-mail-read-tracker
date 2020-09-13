@@ -236,7 +236,7 @@ class HomeController extends Controller
             if(!empty($report)) // tracked mail exists
           {
               $report->clics = $report->clics+1;
-              if($report->clics == 0) //mail has not opened yet
+              if($report->clics == 1) //mail has not opened yet
               {
                   $report->open_date = Carbon::now(); //setting open date
               }
@@ -301,8 +301,8 @@ class HomeController extends Controller
 
     public function drafts()
     {
-      $drafts = Email::where('status','drafts')->get();
-       return view('mail.drafts',['drafts' => $drafts]);
+      
+       return view('mail.drafts',['drafts' => Auth()->user()->drafts]);
     }
 
 
@@ -335,21 +335,14 @@ class HomeController extends Controller
 
       public function forceDelete(Request $request){
 
-        echo "OK";
-        // $ids = $request->ids;
-  
-        // if(Email::whereIn('id',explode(",",$ids))->forceDelete())
-
-        //      return response()->json(['status'=>true,'message'=>"Category deleted successfully."]);   
-        // else
-        //      return response()->json(['status'=>false,'message'=>"Category deleted successfully."]);   
-  
+        Email::whereIn('id',explode(",",$request->get('data')))->forceDelete();
+          return view('draft', ['drafts'=>Auth()->user()->drafts,'box_name' => 'OutBox']);  
         }
-      public function report(Request $request){
+      public function report(Request $request, $id){
   
-            return view('report');  
-     
-  
+            
+            return view('report', ['report' => Report::find($id)]);  
+    
         }
 
 

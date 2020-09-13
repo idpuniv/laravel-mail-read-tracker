@@ -42,7 +42,7 @@
         <div class="col-md-12">
           <div class="card card-primary card-outline">
             <div class="card-header">
-              <h3 class="card-title">Inbox</h3>
+              <h3 class="card-title">{{__($box_name)}}</h3>
 
               <div class="card-tools">
                 
@@ -62,7 +62,6 @@
                 </div>
                 <!-- /.btn-group -->
                 <button type="button" class="btn btn-default btn-sm btn-reload"><i class="fas fa-sync-alt"></i></button>
-                <button type="button" class="btn btn-default btn-sm btn-report"><a href="{{route('mail.report')}}"><i class="far fa-envelope-open"></i></a></button>
                 <div class="float-right">
                   1-50/200
                   <div class="btn-group">
@@ -93,6 +92,7 @@
                     <td class="mailbox-subject "><b>{{$mail->subject}}</b> - {{$mail->body}}
                     </td>
                     <td class="mailbox-attachment"></td>
+                    <td><button type="button" class="btn btn-default btn-sm btn-report"><a href="{{route('mail.report', $report->id)}}"><i class="far fa-envelope-open"></i></a></button></td>
                     <td class="mailbox-date">5 mins ago</td>
                   </tr>
                   @endforeach

@@ -19,7 +19,7 @@
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="index3.html" class="nav-link">{{__('Home')}}</a>
+        <a href="{{route('home')}}" class="nav-link">{{__('Home')}}</a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
         <a href="#" class="nav-link">{{__('Contact')}}</a>
@@ -102,7 +102,7 @@
               <i class="fas fa-inbox mr-2"></i>
               <p>
               {{__('Inbox')}}
-                <span class="badge badge-info right">2</span>
+                <span class="badge badge-info right"></span>
               </p>
             </a>
           </li>
@@ -111,7 +111,7 @@
               <i class="nav-icon far fa-envelope"></i>
               <p>
               {{__('Sent')}}
-              <span class="badge badge-info right">3</span>
+              <span class="badge badge-info right"></span>
               </p>
             </a>
           </li>
@@ -120,7 +120,7 @@
               <i class="nav-icon far fa-file"></i>
               <p>
               {{__('Drafts')}}
-              <span class="badge badge-info right">2</span>
+              <span class="badge badge-info right"></span>
               </p>
             </a>
           </li>
@@ -129,7 +129,7 @@
               <i class="nav-icon far fa-trash-alt"></i>
               <p>
               {{__('Trash')}}
-              <span class="badge badge-info right">2</span>
+              <span class="badge badge-info right"></span>
               </p>
             </a>
           </li>
