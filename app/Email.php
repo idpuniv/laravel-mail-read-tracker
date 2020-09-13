@@ -3,11 +3,13 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Report;
 use App\User;
 
 class Email extends Model
 {
+    use softDeletes;
     //
     protected $fillable = ['sender_addr', 'subject', 'body','status'];
 

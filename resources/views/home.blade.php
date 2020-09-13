@@ -7,8 +7,8 @@
 <link href="{{ asset('plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}" rel="stylesheet">
 <link href="{{ asset('dist/css/adminlte.min.css') }}" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
-
 @endsection
+<meta name="csrf-token" content="{{csrf_token()}}">
 @section('notification')
 <style>
     .overlay{
@@ -50,12 +50,12 @@
                 <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="far fa-square"></i>
                 </button>
                 <div class="btn-group">
-                  <button type="button" class="btn btn-default btn-sm bt_delete "><i class="far fa-trash-alt"></i></button>
+                  <button type="button" class="btn btn-default btn-sm btn-delete "><i class="far fa-trash-alt"></i></button>
                   <button type="button" class="btn btn-default btn-sm"><i class="fas fa-reply"></i></button>
                   <button type="button" class="btn btn-default btn-sm"><i class="fas fa-share"></i></button>
                 </div>
                 <!-- /.btn-group -->
-                <button type="button" class="btn btn-default btn-sm reload_bt"><i class="fas fa-sync-alt"></i></button>
+                <button type="button" class="btn btn-default btn-sm btn-reload"><i class="fas fa-sync-alt"></i></button>
                 <div class="float-right">
                   1-50/200
                   <div class="btn-group">
@@ -109,13 +109,13 @@
             <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="far fa-square"></i>
             </button>
             <div class="btn-group">
-              <button type="button" class="btn btn-default btn-sm bt_delete" ><i class="far fa-trash-alt"></i></button>
+              <button type="button" class="btn btn-default btn-sm btn-delete" ><i class="far fa-trash-alt"></i></button>
               <button type="button" class="btn btn-default btn-sm"><i class="fas fa-reply"></i></button>
               <button type="button" class="btn btn-default btn-sm"><i class="fas fa-share"></i></button>
             </div>
             
             <!-- /.btn-group -->
-            <button type="button" class="btn btn-default btn-sm reload_bt"><i class="fas fa-sync-alt"></i></button>
+            <button type="button" class="btn btn-default btn-sm btn-reload"><i class="fas fa-sync-alt"></i></button>
             <div class="float-right">
               1-50/200
               <div class="btn-group">
@@ -187,7 +187,7 @@
 <script>
   //send ajax reload request
   $(function(){
-    $(document).on('click', '.reload_bt', function(e){
+    $(document).on('click', '.btn-reload', function(e){
       e.preventDefault();
       $.ajax({
         url:'/home/sent',
@@ -207,25 +207,12 @@
 </script>
 
 <script>
-//handle loader while reloading
-// Add remove loading class on body element depending on Ajax request status
-$(document).on({
-  ajaxStart: function(){
-      $("body").addClass("loading"); 
-  },
-  ajaxStop: function(){ 
-      $("body").removeClass("loading"); 
-  }    
-});
-</script>
-
-<script>
   // ajax for delete purpose
 
 $(document).ready(function(){
  
- $('.btn_delete').click(function(){
-  
+ $('.btn-delete').click(function(){
+  //  alert('deletion start');
   if(confirm("Are you sure you want to delete this?"))
   {
    var id = [];
@@ -241,9 +228,14 @@ $(document).ready(function(){
    else
    {
     $.ajax({
-     url:'mail/movetrash/' + int(id) + '/' + isdel,
-     method:'get',
-     data:{id:id, isdel:isdel},
+    headers:{'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+     url:'mail/movetrash/'+ id + '/' + isdel,
+     method:'delete',
+     data:{
+       id:id,
+       isdel:isdel,
+       },
+      dataType:'json',
      success:function()
      {
       for(var i=0; i<id.length; i++)
@@ -265,5 +257,19 @@ $(document).ready(function(){
  
 });
 </script>
+
+<script>
+//handle loader while reloading
+// Add remove loading class on body element depending on Ajax request status
+$(document).on({
+  ajaxStart: function(){
+      $("body").addClass("loading"); 
+  },
+  ajaxStop: function(){ 
+      $("body").removeClass("loading"); 
+  }    
+});
+</script>
+
 <script src="{{asset('dist/js/demo.js')}}"></script>
 @endsection

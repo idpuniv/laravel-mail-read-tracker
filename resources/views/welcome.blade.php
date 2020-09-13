@@ -16,6 +16,7 @@
 
                 <div class="content">
                     <div class="title m-b-md">
+                        <?php //if(Auth::user()->verified == false){Auth::logout();}?>
                         SimplestMailer
                     </div>
 

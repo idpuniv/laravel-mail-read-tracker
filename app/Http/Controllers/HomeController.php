@@ -322,26 +322,27 @@ class HomeController extends Controller
         }
     }
 
-    public  function delete(Request $request, $id)
+    
+
+    public  function softDelete(Request $request, $id, $isdel)
     {
       $email = Email::find($id);
       if($email->delete())
       {
-        return view('home', $request->session()->flash('status', 'supprimer avec succes'));
+        return response()->json(['succes' => 'Deleted']);
       }
       else
       {
-         return view('home', $request->session()->flash('failed', 'echec'));
+         return response()->json(['failed' => 'Failed']);
       }
     }
 
-    public  function move_to_trash(Request $request, $id, $isdel)
+    public  function forceDelete(Request $request, $id)
     {
       $email = Email::find($id);
-      $email->isdel = $isdel;
-      if($email->update())
+      if($email->forceDelete())
       {
-        return view('home', $request->session()->flash('status', 'mis à la corbeille'));
+        return view('home', $request->session()->flash('status', 'supprimer avec succes'));
       }
       else
       {

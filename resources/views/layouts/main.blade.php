@@ -127,7 +127,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="{{route('mail.trash')}}" class="nav-link">
+              <a href="" class="nav-link">
                 <i class="fas fa-trash nav-icon"></i>
                 <p>{{__('Trash')}}</p>
               </a>

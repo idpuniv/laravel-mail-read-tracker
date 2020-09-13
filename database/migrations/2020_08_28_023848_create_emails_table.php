@@ -20,7 +20,7 @@ class CreateEmailsTable extends Migration
             $table->text('body');
             $table->char('status', 10)->nullable();
             $table->enum('type', ['important', 'social', 'promotion'])->nullable();
-            $table->enum('isdel', ['no', 'yes']);
+            $table->softDeletes();
             $table->char('attachment', 100)->nullable();
             $table->timestamps();
         });
