@@ -82,7 +82,7 @@
                   @foreach($mail->report as $report)
                   <?php
                     $color = 'grey';
-                    if($report->clics >0 )
+                    if($report->clics > 0 )
                       $color = 'green';
                   ?>
                   <tr>
@@ -94,7 +94,7 @@
                     </td>
                     <td class="mailbox-star"><a href="#"><i class="fas fa-check-double 1x" style="color:{{$color}}"></i></a></td>
                     <td class="mailbox-name"><a href="read-mail.html">{{$report->receiverUser->name}}</a></td>
-                    <td class="mailbox-subject "><b>{{$mail->subject}}</b> - {{$mail->body}}
+                    <td class="mailbox-subject email-truncated"><b>{{$mail->subject}}</b> - {{$mail->body}}
                     </td>
                     <td class="mailbox-attachment"></td>
                     <td><button type="button" class="btn btn-default btn-sm btn-report"><a href="{{route('mail.report', $report->id)}}"><i class="far fa-envelope-open"></i></a></button></td>
