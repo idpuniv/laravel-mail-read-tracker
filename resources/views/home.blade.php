@@ -230,7 +230,7 @@ $(document).ready(function(){
     $.ajax({
     headers:{'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
      url:'/mail/movetrash/'+ id + '/' + isdel,
-     method:'delete',
+     method:'get',
      data:{
        id:id,
        isdel:isdel,
@@ -243,6 +243,7 @@ $(document).ready(function(){
        $('tr#'+id[i]+'').css('background-color', '#ccc');
        $('tr#'+id[i]+'').fadeOut('slow');
       }
+      location.reload();
      }
      
     });

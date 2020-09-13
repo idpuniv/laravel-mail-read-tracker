@@ -23,6 +23,7 @@ Auth::routes();
 
 Route::middleware(['verified'])->group(function(){
     Route::get('/home/sent', 'HomeController@sent')->name('home');
+    Route::put('/home/test', 'HomeController@test')->name('test');
     Route::get('/mail/movetrash/{id}/{isdel}', 'HomeController@softDelete')->name('mail.trash');
     Route::post('/mail/send', 'HomeController@send')->name('mail.send');
     Route::get('/mail/drafts', 'HomeController@drafts')->name('mail.drafts');
