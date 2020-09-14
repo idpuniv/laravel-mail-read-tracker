@@ -58,6 +58,9 @@ Route::middleware(['verified'])->group(function(){
     Route::get('/mail/read/{id}', 'HomeController@read')->name('mail.read');
     Route::post('/mail/sent/delete', 'HomeController@sentDelete')->name('mail.sent.delete');
     Route::post('/mail/drafts/delete', 'HomeController@draftsDelete')->name('mail.drafts.delete');
+    Route::post('/mail/trash/delete', 'HomeController@trashDelete')->name('mail.trash.delete');
     Route::get('/mail/report/{id}', 'HomeController@report')->name('mail.report');
     Route::get('/test/printable', 'HomeController@test')->name('mail.test');
+    Route::get('/contact/create', 'ContactController@create')->name('create.create');
+
 });

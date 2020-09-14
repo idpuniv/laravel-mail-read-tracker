@@ -6,6 +6,12 @@
 <link href="{{ asset('dist/css/adminlte.min.css') }}" rel="stylesheet">
 <link href="{{ asset('plugins/summernote/summernote-bs4.css') }}" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+<style>
+   .imgPreview img {
+            padding: 8px;
+            max-width: 100px;
+        } 
+</style>
 @endsection
 @section('content')
     <!-- Main content -->
@@ -37,14 +43,24 @@
                      {{ isset($drafts) ? $drafts->body : '' }}
                     </textarea>
                 </div>
+
                 <div class="form-group">
                   <div class="btn btn-default btn-file">
                     <i class="fas fa-paperclip"></i>{{__('Attachments')}}
-                    <input type="file" name="file">
+                    <input type="file" name="file" id="images">
                   </div>
                   <p class="help-block">Max. 32MB</p>
-
                 </div>
+                <div class="row image">
+                   <div class="col"></div>
+                </div>
+                <!-- image preview section -->
+                <!-- image preview section -->
+                <!-- image preview section -->
+                <div class="user-image mb-3 text-center">
+                    <div class="imgPreview"> </div>
+                </div>   
+
               </div>
               <!-- /.card-body -->
               <div class="card-footer">
@@ -96,5 +112,42 @@
     });
 }, 5000);
   </script>
+
+<script>
+        $(function() {
+        // Multiple images preview with JavaScript
+        var multiImgPreview = function(input, imgPreviewPlaceholder) {
+
+            if (input.files) {
+                var filesAmount = input.files.length;
+
+                for (i = 0; i < filesAmount; i++) {
+                    var reader = new FileReader();
+
+                    reader.onload = function(event) {
+                        $($.parseHTML('<img><span><i class="fas fa-times-circle image-discard"></i></span>')).attr('src', event.target.result).appendTo(imgPreviewPlaceholder);
+                    }
+
+                    reader.readAsDataURL(input.files[i]);
+                }
+            }
+
+        };
+
+        $('#images').on('change', function() {
+            multiImgPreview(this, 'div.imgPreview');
+        });
+        });    
+    </script>
+
+    <script>
+
+    // $(function(){
+
+      $('image-discard').click(function(){
+        alert('clicked');
+      })
+    // });
+    </script>
 
   @endsection

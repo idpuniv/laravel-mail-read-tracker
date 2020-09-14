@@ -6,6 +6,12 @@
   <title>Simplestmailer</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}" rel="stylesheet"> 
+  <link href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet">
+  <link href="{{ asset('plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}" rel="stylesheet">
+  <link href="{{ asset('dist/css/adminlte.min.css') }}" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+  <!-- style after adminlte css will be yield hier -->
   @yield('style')
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -204,4 +210,7 @@
   <!-- /.control-sidebar -->
 </div>
 <!-- ./wrapper -->
+<script src="{{asset('plugins/jquery/jquery.min.js')}}"></script>
+<script src="{{asset('plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+<script src="{{asset('dist/js/adminlte.min.js')}}"></script>
 @yield('script')

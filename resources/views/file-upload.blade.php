@@ -26,7 +26,7 @@
 <body>
 
     <div class="container mt-5">
-        <h3 class="text-center mb-5">Image Upload in Laravel</h3>
+        <h3 class="text-center mb-5">Image Upload in Laravel paul</h3>
         <form action="{{route('imageUpload')}}" method="post" enctype="multipart/form-data">
             @csrf
             @if ($message = Session::get('success'))
@@ -88,5 +88,9 @@
         });
         });    
     </script>
+
+
+
+    
 </body>
 </html>

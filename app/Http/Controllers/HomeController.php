@@ -309,7 +309,7 @@ class HomeController extends Controller
     public function trash()
     {
       $trashs = Email::where('status','del')->get();
-       return view('mail.trash',['trashs' => $trashs]);
+       return view('mail.trash',['trashs' => Auth()->user()->drafts]);
     }
 
     public function test()
@@ -335,6 +335,12 @@ class HomeController extends Controller
 
          Email::whereIn('id',explode(",",$request->get('data')))->delete();
          return redirect()->route('mail.drafts');
+
+      }
+    public function trashDelete(Request $request){
+
+         Email::whereIn('id',explode(",",$request->get('data')))->forceDelete();
+         return redirect()->route('mail.trash');
 
       }
 

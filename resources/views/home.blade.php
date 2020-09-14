@@ -1,13 +1,4 @@
 @extends('layouts.main')
-
-@section('style')
-
-<link href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}" rel="stylesheet"> 
-<link href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet">
-<link href="{{ asset('plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}" rel="stylesheet">
-<link href="{{ asset('dist/css/adminlte.min.css') }}" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
-@endsection
 <meta name="csrf-token" content="{{csrf_token()}}">
 @section('notification')
 <style>
@@ -149,9 +140,6 @@
 
 @section('script')
 
-<script src="{{asset('plugins/jquery/jquery.min.js')}}"></script>
-<script src="{{asset('plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
-<script src="{{asset('dist/js/adminlte.min.js')}}"></script>
 <script>
   $(function () {
     //Enable check and uncheck all functionality
