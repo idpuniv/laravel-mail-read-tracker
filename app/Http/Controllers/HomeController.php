@@ -325,13 +325,18 @@ class HomeController extends Controller
 
     
 
-    public function softDelete(Request $request){
+    public function SentDelete(Request $request){
 
          Email::whereIn('id',explode(",",$request->get('data')))->delete();
-         return view('home', ['mails'=>Auth()->user()->sent,'box_name' => 'OutBox']);   
+         return redirect()->route('mail.sent');   
 
       }
+    public function draftsDelete(Request $request){
 
+         Email::whereIn('id',explode(",",$request->get('data')))->delete();
+         return redirect()->route('mail.drafts');
+
+      }
 
       public function forceDelete(Request $request){
 

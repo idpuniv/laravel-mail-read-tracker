@@ -127,7 +127,7 @@
         <!-- /.col -->
       </div>
       <!-- /.row -->
-      <form id="delform" method="POST" action="{{route('mail.delete')}}">
+      <form id="delform" method="POST" action="{{route('mail.drafts.delete')}}">
          @csrf
          <input type="hidden" name="data" id="data" value="">
       </form>
