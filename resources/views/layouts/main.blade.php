@@ -10,6 +10,7 @@
   <link href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet">
   <link href="{{ asset('plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}" rel="stylesheet">
   <link href="{{ asset('dist/css/adminlte.min.css') }}" rel="stylesheet">
+  @yield('style_after_adminlte')
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
   <!-- style after adminlte css will be yield hier -->
   @yield('style')
@@ -28,7 +29,7 @@
         <a href="{{route('home')}}" class="nav-link">{{__('Home')}}</a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="#" class="nav-link">{{__('Contact')}}</a>
+        <a href="{{route('contact.index')}}" class="nav-link">{{__('Contact')}}</a>
       </li>
     </ul>
 

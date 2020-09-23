@@ -53,7 +53,12 @@
                     </thead>
                     <tbody>
                     <tr>
-                      <td>{{$report->receiverUser->name}}</td>
+                    <?php if(!is_object($report->receiverUser)){
+                          $report->receiverUser = new \App\User();
+                          $report->receiverUser->name = 'inconnu';
+                    }
+                    ?>
+                      <td>{{$report->receiverUser->name. ' | ' .$report->receiver_addr}}</td>
                       <!-- <td>455-981-221</td> -->
                       <td>{{$report->receiver_addr}}</td>
                       <td>{{$report->clics}}</td>

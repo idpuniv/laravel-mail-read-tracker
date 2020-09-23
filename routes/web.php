@@ -41,26 +41,27 @@ Route::get('/image-upload', 'FileUpload@createForm');
 // Store image
 Route::post('/image-upload', 'FileUpload@fileUpload')->name('imageUpload');
 
-Route::get('/{id}/webbug.php', 'HomeController@track');
-Route::get('/mail/test', 'HomeController@test')->name('test');
+Route::get('/{id}/webbug.php', 'EmailController@track');
+Route::get('/mail/test', 'EmailController@test')->name('test');
 Route::post('/upload', 'CategoryController@upload')->name('upload');
 Auth::routes(['verify' => true]);
 Auth::routes();
 
 Route::middleware(['verified'])->group(function(){
-    Route::get('/home/sent', 'HomeController@sent')->name('home');
-    Route::get('/mail/movetrash/{id}/{isdel}', 'HomeController@softDelete')->name('mail.trash');
-    Route::post('/mail/send', 'HomeController@send')->name('mail.send');
-    Route::get('/mail/drafts', 'HomeController@drafts')->name('mail.drafts');
-    Route::get('/mail/trash', 'HomeController@trash')->name('mail.trash');
-    Route::get('/mail/inbox', 'HomeController@received')->name('mail.inbox');
-    Route::get('/mail/create/{id?}', 'HomeController@create')->name('mail.create');
-    Route::get('/mail/read/{id}', 'HomeController@read')->name('mail.read');
-    Route::post('/mail/sent/delete', 'HomeController@sentDelete')->name('mail.sent.delete');
-    Route::post('/mail/drafts/delete', 'HomeController@draftsDelete')->name('mail.drafts.delete');
-    Route::post('/mail/trash/delete', 'HomeController@trashDelete')->name('mail.trash.delete');
-    Route::get('/mail/report/{id}', 'HomeController@report')->name('mail.report');
-    Route::get('/test/printable', 'HomeController@test')->name('mail.test');
-    Route::get('/contact/create', 'ContactController@create')->name('create.create');
+    Route::get('/mail/sent', 'EmailController@sent')->name('home');
+    Route::get('/mail/movetrash/{id}/{isdel}', 'EmailController@softDelete')->name('mail.trash');
+    Route::post('/mail/send', 'EmailController@send')->name('mail.send');
+    Route::get('/mail/drafts', 'EmailController@drafts')->name('mail.drafts');
+    Route::get('/mail/trash', 'EmailController@trash')->name('mail.trash');
+    Route::get('/mail/inbox', 'EmailController@received')->name('mail.inbox');
+    Route::get('/mail/create/{id?}', 'EmailController@create')->name('mail.create');
+    Route::get('/mail/read/{id}', 'EmailController@read')->name('mail.read');
+    Route::post('/mail/sent/delete', 'EmailController@sentDelete')->name('mail.sent.delete');
+    Route::post('/mail/drafts/delete', 'EmailController@draftsDelete')->name('mail.drafts.delete');
+    Route::post('/mail/trash/delete', 'EmailController@trashDelete')->name('mail.trash.delete');
+    Route::get('/mail/report/{id}', 'EmailController@report')->name('mail.report');
+    Route::get('/test/printable', 'EmailController@test')->name('mail.test');
+    Route::get('/contact/index', 'ContactController@index')->name('contact.index');
+    Route::get('/contact/create', 'ContactController@create')->name('contact.create');
 
 });

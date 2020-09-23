@@ -15,8 +15,9 @@ class CreateFilesTable extends Migration
     {
         Schema::create('files', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('filenames');
-            $table->timestamps();
+            $table->string('name');
+            $table->foreignId('email_id')->constrained()->onDelete('cascade');
+
         });
     }
 

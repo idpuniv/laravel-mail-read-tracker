@@ -84,7 +84,13 @@
                       </div>
                     </td>
                     <td class="mailbox-star"><a href="#"><i class="fas fa-check-double 1x" style="color:{{$color}}"></i></a></td>
-                    <td class="mailbox-name"><a href="read-mail.html">{{$report->receiverUser->name}}</a></td>
+                    <?php if(!is_object($report->receiverUser)){
+                          $report->receiverUser = new \App\User();
+                          $report->receiverUser->name = 'inconnu';
+                    }
+                    ?>
+                      <td class="mailbox-name"><a href="read-mail.html">{{$report->receiverUser->name. ' | ' .$report->receiver_addr}}</a></td>
+                   
                     <td class="mailbox-subject email-truncated"><b>{{$mail->subject}}</b> - {{$mail->body}}
                     </td>
                     <td class="mailbox-attachment"></td>

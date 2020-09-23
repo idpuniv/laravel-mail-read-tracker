@@ -95,8 +95,9 @@
     "Recover Password": "Recuperation de mot passe",
     "Open email report": "Rapport des emails envoyés",
     "Last Name": "Nom",
-    "Firs Name": "Prenom",
+    "First Name": "Prenom",
     "Open Count": "Nombre d'ouverture",
     "Print": "Imprimer",
-    "First Time Open Date": "Prèmiere date d'ouverture"
+    "First Time Open Date": "Prèmiere date d'ouverture",
+    "Contacts List": "Liste des contacts"
 }

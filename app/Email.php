@@ -22,4 +22,8 @@ class Email extends Model
     {
     	return $this->hasMany(Report::class);
     }
+
+    public function file(){
+        return $this->hasMany(File::class);
+    }
 }

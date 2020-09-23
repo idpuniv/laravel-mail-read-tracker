@@ -53,47 +53,54 @@ class CategoryController extends Controller
 
 public function upload(){
 
-    header('Content-Type: application/json');
-    
-    $uploaded = [];
-    $allowed = ['mp4', 'png','pdf', 'docx'];
-    
-    $succeeded = [];
-    $failed = [];
-    
-    if(!empty($_FILES['file'])){
-        foreach($_FILES['file']['name'] as $key => $name){
-            if($_FILES['file']['error'][$key] === 0){
-                $temp = $_FILES['file']['tmp_name'][$key];
-    
-                $ext = explode('.', $name);
-                $ext = strtolower(end($ext));
-                
-                $file = md5_file($temp) . time() . '.' . $ext;
-    
-                if(in_array($ext, $allowed) === true && move_uploaded_file($temp, "images/{$file}") === true){
-                    $succeeded[] = array(
-                        'name' => $name,
-                        'file' => $file
-                    );
-                }else{
-                    $failed[] = array(
-                        'name' => $name
-                    );
-                }
-            }
-        }
-    
-        if(!empty($_POST['ajax'])){
-            echo json_encode(array(
-                'succeeded' => $succeeded,
-                'failed' => $failed
-            ));
-        }
-    }
+    // Count total files
+$countfiles = count($_FILES['files']['name']);
+ 
+// Upload directory
+$upload_location = "uploads/";
+ 
+// To store uploaded files path
+$files_arr = array();
+ 
+// Loop all files
+for($index = 0;$index < $countfiles;$index++){
+ 
+   // File name
+   $filename = $_FILES['files']['name'][$index];
+ 
+   // Get extension
+   $ext = pathinfo($filename, PATHINFO_EXTENSION);
+ 
+   // Valid image extension
+   $valid_ext = array("png","jpeg","jpg");
+ 
+   // Check extension
+   if(in_array($ext, $valid_ext)){
+ 
+     // File path
+     $path = $upload_location.$filename;
+ 
+     // Upload file
+     if(move_uploaded_file($_FILES['files']['tmp_name'][$index],$path)){
+        $files_arr[] = $path;
+        
+        File::create([
+            'name' => $path
+        ]);
+        // mysqli_query($conn,"INSERT INTO pictures (title)
+        // VALUES ('".$path."')");
+     }
+   }
+ 
+}
+ 
+echo json_encode($files_arr);
+die;
+
+}
 
 
-    }
+    
 
 
 

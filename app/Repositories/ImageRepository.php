@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\Image;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\Request;
 use App\Http\Requests\EmailRequest;
 use Intervention\Image\Facades\Image as InterventionImage;
 
@@ -17,12 +18,21 @@ class ImageRepository
      * @param  directory $directory
      * @return filname or null
      */
-    public function upload(EmailRequest $request, $directory)
+    public function store($file)
     {
-      $file = $request->file('file');
-      $name = $file->getClientOriginalName();
-      if($file->move($directory, $file->getClientOriginalName()))
-        return $name;
-    return null;
+        // Save image
+        if($path = basename ($file->store('attachments')));
+          return $path;
+        // Save thumb
+        // $image = InterventionImage::make ($request->image)->widen (500)->encode ();
+        // Storage::put ('thumbs/' . $path, $image);
+        // Save in base
+        // $image = new Image;
+        // $image->description = $request->description;
+        // $image->category_id = $request->category_id;
+        // $image->adult = isset($request->adult);
+        // $image->name = $path;
+        // $request->user()->images()->save($image);
+        return null;
     }
 }
