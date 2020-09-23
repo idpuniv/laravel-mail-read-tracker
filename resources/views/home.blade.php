@@ -95,7 +95,7 @@
                     </td>
                     <td class="mailbox-attachment"></td>
                     <td><button type="button" class="btn btn-default btn-sm btn-report"><a href="{{route('mail.report', $report->id)}}"><i class="far fa-envelope-open"></i></a></button></td>
-                    <td class="mailbox-date">5 mins ago</td>
+                    <td class="mailbox-date">{{time_ago($mail->created_at)}}</td>
                   </tr>
                   @endforeach
                   @endforeach
