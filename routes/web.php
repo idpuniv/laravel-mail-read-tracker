@@ -60,6 +60,9 @@ Route::middleware(['verified'])->group(function(){
     Route::post('/mail/drafts/delete', 'EmailController@draftsDelete')->name('mail.drafts.delete');
     Route::post('/mail/trash/delete', 'EmailController@trashDelete')->name('mail.trash.delete');
     Route::get('/mail/report/{id}', 'EmailController@report')->name('mail.report');
+    Route::post('/mail/search', 'EmailController@search')->name('mail.search');
+
+
     Route::get('/test/printable', 'EmailController@test')->name('mail.test');
     Route::get('/contact/index', 'ContactController@index')->name('contact.index');
     Route::get('/contact/create', 'ContactController@create')->name('contact.create');

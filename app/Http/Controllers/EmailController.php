@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\EmailRequest;
+use App\Http\Requests\SearchRequest;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 use App\Repositories\ImageRepository;
@@ -396,7 +397,45 @@ class EmailController extends Controller
             
             return view('report', ['report' => Report::find($id)]);  
     
+      }
+
+      public function search(SearchRequest $request)
+      {
+
+         $type = ['sent', 'drafts'];
+         $id = $request->get('type');
+         if(in_array($id, $type))
+         {  // search in sent mail or drafts
+              $contcts = Auth()->user()->contact; //get user contacts
+              $report = Auth()->user()->report; //get report contacts
+              $emails = Auth()->user()->email; //get report contacts
+             
+              $report = Report::where('receiver_addr', Auth()->user()->email)
+              ->Where('subject', 'like', '%' . Input::get('serach') . '%')->get()
+              ->orWhere('body', 'like', '%' . Input::get('serach') . '%')->get();
+              
+
+              if($id === 'sent')
+              {
+                  $mails = Email::where('sender_addr', Auth::user()->email)->get();
+                  return view('mail.sent', ['mails'=>Auth()->user()->sent,'box_name' => 'OutBox']);
+              }
+              else
+              {
+                $mails = Email::where('sender_addr', Auth::user()->email)->get();
+                return view('mail.drafts', ['mails'=>Auth()->user()->drafts,'box_name' => 'OutBox']);
+              }
         }
+
+        else
+        {
+          return view('mail.sent', ['mails'=>Auth()->user()->sent,'box_name' => 'OutBox']);
+        }
+
+         
+           
+      }
+      
 
 
 }

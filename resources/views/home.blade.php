@@ -270,4 +270,18 @@ $(document).on({
 
 	});
 </script>
+
+<script>
+//set search form action 
+$('#search').change(function(){
+  // alert('changed');
+  
+})
+</script>
+<script>
+$(document).ready(function(){
+   $('#input-type').attr('value', 'sent');
+  //  alert('changed');
+})
+</script>
 @endsection

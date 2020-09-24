@@ -34,15 +34,17 @@
     </ul>
 
     <!-- SEARCH FORM -->
-    <form class="form-inline ml-3">
+    <form class="form-inline ml-3" method="POST", action="{{route('mail.search')}}" id="form-search">
+      @csrf
       <div class="input-group input-group-sm">
-        <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
+        <input class="form-control form-control-navbar" name="search" id="search" type="search" placeholder="Search" aria-label="Search">
         <div class="input-group-append">
           <button class="btn btn-navbar" type="submit">
-            <i class="fas fa-search"></i>
+            <i class="fas fa-search" id="fa-seach"></i>
           </button>
         </div>
       </div>
+      <input type="hidden" value="" name="type" id="input-type">
     </form>
 
     <!-- Right navbar links -->
@@ -214,4 +216,14 @@
 <script src="{{asset('plugins/jquery/jquery.min.js')}}"></script>
 <script src="{{asset('plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 <script src="{{asset('dist/js/adminlte.min.js')}}"></script>
+
+<script>
+    $('#search').keypress(function(event){
+        var keycode = (event.keyCode ? event.keyCode : event.which);
+        if(keycode == '13'){
+            // alert('You pressed a "enter" key in textbox');  
+            $('form-search').submit();
+        }
+    });
+</script>
 @yield('script')
