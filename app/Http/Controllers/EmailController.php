@@ -60,7 +60,7 @@ class EmailController extends Controller
         $drafts = Email::find($id);
         return view('mail.create', ['drafts' => $drafts]);
       }
-      return view('mail.create');
+      return view('mail.create', ['contacts' => Auth()->user()->contact]);
 
     }
 
@@ -404,7 +404,7 @@ class EmailController extends Controller
 
          $type = ['sent', 'drafts'];
          $id = $request->get('type');
-         if(in_array($id, $type))
+         if(in_array($request->get('type'), $type))
          {  // search in sent mail or drafts
               $contcts = Auth()->user()->contact; //get user contacts
               $report = Auth()->user()->report; //get report contacts

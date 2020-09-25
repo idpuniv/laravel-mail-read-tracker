@@ -62,9 +62,13 @@ Route::middleware(['verified'])->group(function(){
     Route::get('/mail/report/{id}', 'EmailController@report')->name('mail.report');
     Route::post('/mail/search', 'EmailController@search')->name('mail.search');
 
-
     Route::get('/test/printable', 'EmailController@test')->name('mail.test');
+    
     Route::get('/contact/index', 'ContactController@index')->name('contact.index');
     Route::get('/contact/create', 'ContactController@create')->name('contact.create');
+    Route::post('/contact/store', 'ContactController@store')->name('contact.store');
+    Route::get('/contact/edit/{id}', 'ContactController@edit')->name('contact.edit');
+    Route::post('/contact/update/{id}', 'ContactController@upadate')->name('contact.update');
+    Route::post('/contact/delete', 'ContactController@destroy')->name('contact.delete');
 
 });

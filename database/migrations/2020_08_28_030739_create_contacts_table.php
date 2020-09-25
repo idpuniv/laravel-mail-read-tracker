@@ -17,9 +17,8 @@ class CreateContactsTable extends Migration
             $table->id();
             $table->string('first_name');
             $table->string('last_name');
-            $table->char('email',100)->unique();
+            $table->char('email',100);
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->timestamps();
         });
     }
 

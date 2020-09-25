@@ -4,6 +4,8 @@
 
 <link href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}" rel="stylesheet"> 
 <link href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet">
+<link href="../../plugins/datatables-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+<link href="../../plugins/datatables-responsive/css/responsive.bootstrap4.min.css" rel="stylesheet">
 <link href="{{ asset('plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}" rel="stylesheet">
 <link href="{{ asset('dist/css/adminlte.min.css') }}" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-confirmation/1.0.5/bootstrap-confirmation.min.js"></script>
@@ -145,6 +147,13 @@
 
 <script src="{{asset('plugins/jquery/jquery.min.js')}}"></script>
 <script src="{{asset('plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+
+<!-- dataTables scripts -->
+<script src="{{asset('../../plugins/datatables/jquery.dataTables.min.js')}}"></script>
+<script src="{{asset('../../plugins/datatables-bs4/js/dataTables.bootstrap4.min.js')}}"></script>
+<script src="{{asset('../../plugins/datatables-responsive/js/dataTables.responsive.min.js')}}"></script>
+<script src="{{asset('../../plugins/datatables-responsive/js/responsive.bootstrap4.min.js')}}"></script>
+<!-- /dataTables scripts -->
 <script src="{{asset('dist/js/adminlte.min.js')}}"></script>
 
 <script>
@@ -332,4 +341,5 @@ $(document).on({
 
 </script>
 <script src="{{asset('dist/js/demo.js')}}"></script>
+<script src="{{asset('js/data-table-config.js')}}"></script>
 @endsection

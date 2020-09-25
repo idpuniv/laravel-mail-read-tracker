@@ -67,6 +67,11 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(Contact::class);
     }
+
+    // public function contactEmail()
+    // {
+    //     return Contact::select('email')->where('user_id', Auth()->user()->id)->get();
+    // }
     public function sentCount()
     {
         $count = $this->hasMany(Email::class, 'sender_addr','email')->where('status','sent');
