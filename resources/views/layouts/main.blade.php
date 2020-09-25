@@ -10,6 +10,7 @@
   <link href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet">
   <link href="{{ asset('plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}" rel="stylesheet">
   <link href="{{ asset('dist/css/adminlte.min.css') }}" rel="stylesheet">
+  <link href="{{ asset('plugins/summernote/summernote-bs4.css') }}" rel="stylesheet">
   @yield('style_after_adminlte')
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
   <!-- style after adminlte css will be yield hier -->
@@ -217,6 +218,8 @@
 <script src="{{asset('js/typehead-4.0.2.min.js')}}"></script>
 <script src="{{asset('plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 <script src="{{asset('dist/js/adminlte.min.js')}}"></script>
+<script src="{{asset('dist/js/demo.js')}}"></script>
+<script src="{{asset('plugins/summernote/summernote-bs4.min.js')}}"></script>
 
 <script>
     $('#search').keypress(function(event){

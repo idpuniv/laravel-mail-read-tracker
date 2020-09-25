@@ -13,7 +13,7 @@
               	@csrf
               <div class="card-body">
                 <div class="form-group">
-                  <input class="form-control" name="receiver_addr" id="email" placeholder="{{__('To')}}:" required="true">
+                  <input class="form-control" name="receiver_addr" id="email" placeholder="{{__('To')}}:" required="true" autocomplete="false">
                   <div id="emailList"></div>
                 </div>
                
@@ -157,4 +157,11 @@
 
     });
     </script>
+
+<script>
+  $(function () {
+    //Add text editor
+    $('#compose-textarea').summernote()
+  })
+</script>
   @endsection
