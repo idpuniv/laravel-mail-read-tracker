@@ -1,58 +1,56 @@
-<html lang="en">
-<head>
-<title>How to upload and display multiple images in php ajax</title>
- 
-<!-- Bootstrap Css -->
-<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
- 
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
- 
-</head>
-<body>
-<style type="text/css">
-#preview img{
-   margin: 5px;
-}
-</style>
-<form method='post' action='' enctype="multipart/form-data">
-   <input type="file" id='files' name="files[]" multiple><br>
-   <input type="button" id="submit" value='Upload'>
-</form>
- 
-<!-- Preview -->
-<div id='preview'></div>
-</body>
+<!DOCTYPE html>
+<html>
+ <head>
+  <title>Ajax Autocomplete Textbox in Laravel using JQuery</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <style type="text/css">
+   .box{
+    width:600px;
+    margin:0 auto;
+   }
+  </style>
+ </head>
+ <body>
+  <br />
+  <div class="container box">
+   <h3 align="center">Ajax Autocomplete Textbox in Laravel using JQuery</h3><br />
+   
+   <div class="form-group">
+    <input type="text" name="country_name" id="country_name" class="form-control input-lg" placeholder="Enter Country Name" />
+    <div id="countryList">
+    </div>
+   </div>
+   {{ csrf_field() }}
+  </div>
+ </body>
+</html>
+
 <script>
 $(document).ready(function(){
- 
-$('#submit').click(function(){
- 
-   var form_data = new FormData();
- 
-   // Read selected files
-   var totalfiles = document.getElementById('files').files.length;
-   for (var index = 0; index < totalfiles; index++) {
-      form_data.append("files[]", document.getElementById('files').files[index]);
- $('#preview').append("<img src='"+URL.createObjectURL(event.target.files[i])+"'>");
-   }
- 
-   // AJAX request
-   $.ajax({
-     url: 'ajaxUpload.php', 
-     type: 'post',
-     data: form_data,
-     dataType: 'json',
-     contentType: false,
-     processData: false,
-     success: function (response) {
-        alert("Uploaded SuccessFully");
-        console.log(response);
- 
-     }
-   });
- 
-});
- 
+
+ $('#country_name').keyup(function(){ 
+        var query = $(this).val();
+        if(query != '')
+        {
+         var _token = $('input[name="_token"]').val();
+         $.ajax({
+          url:"{{ route('autocomplete.fetch') }}",
+          method:"POST",
+          data:{query:query, _token:_token},
+          success:function(data){
+           $('#countryList').fadeIn();  
+                    $('#countryList').html(data);
+          }
+         });
+        }
+    });
+
+    $(document).on('click', 'li', function(){  
+        $('#country_name').val($(this).text());  
+        $('#countryList').fadeOut();  
+    });  
+
 });
 </script>
-</html>

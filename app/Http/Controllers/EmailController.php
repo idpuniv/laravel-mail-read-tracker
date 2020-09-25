@@ -52,8 +52,6 @@ class EmailController extends Controller
         // $mail = Report::find(1);
         // $user = Email::find(1);
 
-        // var_dump($user->user);
-
       $id = $request->route()->parameter('id', -1);
       if($id > 0)
       {
@@ -61,6 +59,7 @@ class EmailController extends Controller
         return view('mail.create', ['drafts' => $drafts]);
       }
       return view('mail.create', ['contacts' => Auth()->user()->contact]);
+      
 
     }
 
@@ -434,6 +433,11 @@ class EmailController extends Controller
 
          
            
+      }
+
+      public function sugestEmail()
+      {
+        return response()->json(Auth()->user()->contact()->get('email'));
       }
       
 

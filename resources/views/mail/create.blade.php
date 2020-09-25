@@ -13,8 +13,10 @@
               	@csrf
               <div class="card-body">
                 <div class="form-group">
-                  <input class="form-control" name="receiver_addr" placeholder="{{__('To')}}:" required="true">
+                  <input class="form-control" name="receiver_addr" id="email" placeholder="{{__('To')}}:" required="true">
+                  <div id="emailList"></div>
                 </div>
+               
                 <div class="form-group">
                   <input class="form-control" name="subject" placeholder="{{__('Subject')}}:" required="true" value='{{ isset($drafts) ? $drafts->subject : "" }}'>
                 </div>
@@ -93,7 +95,6 @@
 
   @section('script')
 
-
   <script>
     window.setTimeout(function() {
     $(".alert").fadeTo(500, 0).slideUp(500, function(){
@@ -101,4 +102,59 @@
     });
 }, 5000);
   </script>
+
+<script>
+    $(document).ready(function () {
+        $('#email').typeahead({
+            source: function () {
+              $.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
+                    $.ajax({
+                    url: "{{route('mail.suggest')}}",       
+                    dataType: "json",
+                    type: "POST",
+                    success: function (data) {
+						result($.map(data, function (item) {
+							return item;
+                        }));
+                    },
+                    error: function()
+                    {
+                      console.log('error');
+                    }
+                });
+            }
+        });
+    });
+ </script>
+<script>
+    $(document).ready(function(){
+
+    $('#email').keyup(function(){ 
+            var query = $(this).val();
+            if(query != '')
+            {
+            var _token = $('input[name="_token"]').val();
+            $.ajax({
+              url:"{{ route('autocomplete.fetch') }}",
+              method:"POST",
+              data:{query:query, _token:_token},
+              success:function(data){
+              $('#emailList').fadeIn();  
+                        $('#emailList').html(data);
+              }
+            });
+            }
+        });
+
+        $(document).on('click', 'li', function(){  
+            $('#email').val($(this).text());  
+            $('#emailList').fadeOut();  
+        });  
+
+    });
+    </script>
   @endsection

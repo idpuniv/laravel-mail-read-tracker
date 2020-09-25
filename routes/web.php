@@ -19,9 +19,9 @@ Route::get('/', function () {
 
 
 
-Route::get('/category', 'CategoryController@index');
+Route::get('/autocomplete', 'CategoryController@index');
 
-Route::get('/category/{id}', ['as'=>'category.destroy','uses'=>'CategoryController@destroy']);
+Route::post('/autocomplete/fetch', 'AutocompleteController@fetch')->name('autocomplete.fetch');
 
 Route::get('/delete-multiple-category', ['as'=>'category.multiple-delete','uses'=>'CategoryController@deleteMultiple']);
 Route::get('file','FileController@create');
@@ -70,5 +70,7 @@ Route::middleware(['verified'])->group(function(){
     Route::get('/contact/edit/{id}', 'ContactController@edit')->name('contact.edit');
     Route::post('/contact/update/{id}', 'ContactController@upadate')->name('contact.update');
     Route::post('/contact/delete', 'ContactController@destroy')->name('contact.delete');
+
+    Route::post('/mail/suggest', 'ContactController@destroy')->name('mail.suggest');
 
 });
