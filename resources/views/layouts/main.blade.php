@@ -9,6 +9,8 @@
   <link href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}" rel="stylesheet"> 
   <link href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet">
   <link href="{{ asset('plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}" rel="stylesheet">
+  <link href="{{ asset('plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') }}" rel="stylesheet">
+  <link href="{{ asset('plugins/toastr/toastr.min.css') }}" rel="stylesheet">
   <link href="{{ asset('dist/css/adminlte.min.css') }}" rel="stylesheet">
   <link href="{{ asset('plugins/summernote/summernote-bs4.css') }}" rel="stylesheet">
   @yield('style_after_adminlte')
@@ -68,7 +70,7 @@
 
             
           <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
+          <a href="{{route('profile')}}" class="dropdown-item">
             <i class="fas fa-user-cog mr-2"></i>{{__('Profile')}}
           </a>
         </div>
@@ -191,7 +193,29 @@
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
-  
+  @section('modal')
+  <div class="modal fade" id="modal-default">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Suppression</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <p>Voulez-vous vraiment supprimer ce contact ? </p>
+            </div>
+            <div class="modal-footer justify-content-between">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+              <button type="button" class="btn btn-danger" id="btn-modal-del">Confirmer</button>
+            </div>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+    <!-- modal section -->
 
   <footer class="main-footer">
     <strong>{{__('Copyright')}}&copy; 2014-2019 <a href="http://simplestmailer.ido">Simplestmailer</a>.</strong>
@@ -217,6 +241,8 @@
 <script src="{{asset('plugins/jquery/jquery.min.js')}}"></script>
 <script src="{{asset('js/typehead-4.0.2.min.js')}}"></script>
 <script src="{{asset('plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+<script src="{{asset('plugins/sweetalert2/sweetalert2.min.js')}}"></script>
+<script src="{{asset('plugins/toastr/toastr.min.js')}}"></script>
 <script src="{{asset('dist/js/adminlte.min.js')}}"></script>
 <script src="{{asset('dist/js/demo.js')}}"></script>
 <script src="{{asset('plugins/summernote/summernote-bs4.min.js')}}"></script>

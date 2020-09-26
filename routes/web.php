@@ -72,5 +72,9 @@ Route::middleware(['verified'])->group(function(){
     Route::post('/contact/delete', 'ContactController@destroy')->name('contact.delete');
 
     Route::post('/mail/suggest', 'ContactController@destroy')->name('mail.suggest');
+    
+    Route::get('/profile', 'ProfileController@index')->name('profile');
+    Route::post('/profile/update', 'ProfileController@update')->name('profile.update');
+    Route::post('/profile/delete', 'ProfileController@delete')->name('profile.delete');
 
 });
