@@ -90,6 +90,7 @@ class AuthController extends Controller
      */
     public function user(Request $request)
     {
+        echo 'hello api';
         return response()->json($request->user());
     }
 }
