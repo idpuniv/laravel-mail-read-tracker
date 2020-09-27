@@ -14,9 +14,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->post('/api/user', 'api\AuthController@login') ;
+Route::middleware('auth:api')->get('/api/user/{user}', 'api\AuthController@user') ;
 
-// Route::prefix('/user')->group(function(){
-//     Route::post('/login', 'api\AuthController@login')->middleware('auth:api');
+Route::prefix('/user')->group(function(){
+    Route::post('/login', 'api\AuthController@login');
+    Route::get('/logout', 'api\AuthController@logout')->middleware('auth:api');
+    Route::middleware('auth:api')->get('/sent', 'api\AuthController@sentEmail');
 
-// });
+});
+Route::prefix('/emails')->group(function(){
+    Route::get('/', 'api\EmailController@sentEmail')->middleware('auth:api');
+    Route::post('/', 'api\EmailController@store')->middleware('auth:api');
+    Route::get('/{email}', 'api\EmailController@show')->middleware('auth:api');
+    Route::get('/reports', 'api\EmailController@report')->middleware('auth:api');
+});

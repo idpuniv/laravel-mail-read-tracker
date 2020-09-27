@@ -83,57 +83,6 @@ class EmailController extends Controller
     public function send(EmailRequest $request, ImageRepository $repository)
     {
         
-      //   try
-      //   {
-
-      //   $mail = new PHPMailer();
-      //   $mail->STMPDebug = 1;
-      //   $mail->IsSMTP();
-      //   $mail->CharSet = 'utf-8';
-      //   $mail->Host = 'smtp.gmail.com';
-      //   $mail->Port = 587;
-      //   $mail->SMTPAuth = true;
-      //   $mail->SMTPSecure = 'tls';
-      //   $mail->IsHTML(true);
-
-      //   $mail->Username = 'paulido92@gmail.com';
-      //   $mail->Password = 'IdP#i@gm.com';
-      //   $mail->From = 'paulido92@gmail.com';
-      //   $mail->FromName = 'paulido92';
-
-      //   $mail->AddAddress($request->get('receiver_addr'));
-      //   $mail->Subject = $request->get('subject');
-        // $message_body = $request->get('body');
-        // $track_code = md5(rand());
-
-        // $message_body .= '<img src="{{route(blank, $track_code)}}" width="1" height="1" border="0" alt=""/>';
-      //   //$mail->MsgHTML($message_body);
-      //   $status = 0;
-      //   echo "trying send";
-      //   if($mail->send())
-      //   {
-        //     echo 'passed';
-        //     Email::create([
-        //         'address' => $request->get('address'),
-        //         'subject' => $request->get('subject'),
-        //         'body' => $request->get('body'),
-        //     ]);
-        //     $status = 1;
-
-        // }
-        // else
-        // {
-        //    $status = 2;
-        // }
-      //   $mail->Body = $message_body;
-
-      // }
-      // catch(Exception $e){
-      //   echo $e->getMessage();
-      // }
-
-
-
       $mail = new PHPMailer(true);
         
      try {
@@ -189,47 +138,6 @@ class EmailController extends Controller
             'status' => 'sent',
         ]);
 
-        // $files = [];
-        // if($request->hasfile('files'))
-        //  {
-
-        //   // var_dump($_POST['choix']);
-        //   // var_dump($_FILES['filesnames']);
-        //   // echo '-------------------------------------------\n';
-        //   var_dump($_FILES['files']);
-        //   // foreach($_POST['choix'] as $key => $value)
-        //   // {
-        //   //   echo $value;
-        //   // }
-        //     // foreach($request->file('files') as $file)
-        //     // {
-        //     //     $name = time().rand(1,100).'.'.$file->extension();
-        //     //     $file->move(public_path('files'), $name);  
-        //     //     $files = $name;
-                
-        //     // }
-        //     // // saving each attachment
-        //     //     File::create([
-        //     //       'name' => json_encode($files),
-        //     //       'email_id' => $mail->id,
-        //     //     ]);
-            
-        // }
-        // if(!empty($request->get('file'))) // if there is attachement
-        // {
-        //        $mailu = Email::find($mail->id);
-        //        $filename = $imageRepository->upload($request, 'images/attachments');
-        //        $mailu->attachement = $filename;
-        //        $mailu->update();
-        // }
-        // if(isset($request->files))
-        // {
-        //     $filenames = [];   //contain all saved attachment uplopaded
-        //     foreach($request->files as $file)
-        //     {
-        //       $filenames = $repository->store($file);
-        //     }
-        //     $filename = $repository->store($file);
               Report::create([
                   'email_id' => $mail->id,
                   'receiver_addr' => $request->get('receiver_addr'),
@@ -237,9 +145,6 @@ class EmailController extends Controller
                   'status' => 'sent',
               ]); 
 
-              
-            
-        // }
         $request->session()->flash('success','Sent Success');
 
         
@@ -255,13 +160,6 @@ class EmailController extends Controller
             'status' => 'drafts',
         ]);
 
-        // if(!empty($request->get('file'))) // if there is attachement
-        // {
-        //        $mailu = Email::find($mail->id);
-        //        $filename = $imageRepository->upload($request, 'images/attachments');
-        //        $mailu->attachement = $filename;
-        //        $mailu->update();
-        // }
         $request->session()->flash('failed','Sent Failed');
     }
     return view('mail.create');

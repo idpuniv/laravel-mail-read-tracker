@@ -4,6 +4,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\User;
+use Auth;
 class AuthController extends Controller
 {
     /**
@@ -27,6 +28,7 @@ class AuthController extends Controller
             'email' => $request->email,
             'password' => bcrypt($request->password)
         ]);
+
         $user->save();
         return response()->json([
             'message' => 'Successfully created user!'
@@ -88,8 +90,9 @@ class AuthController extends Controller
      *
      * @return [json] user object
      */
-    public function user(Request $request)
+    public function all(Request $request)
     {
-        return response()->json($request->user());
+        // return response()->json($request->user());
+        return response()->json(User::all());
     }
 }
