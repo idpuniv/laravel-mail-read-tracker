@@ -1,4 +1,14 @@
 @extends('layouts.main')
+@section('style')
+<style>
+  .btn-rm{
+    color:red;
+    position:relative;
+    left:-15px;
+    top:-35px;
+  }
+</style>
+@endsection
 @section('content')
     <!-- Main content -->
         <div class="row">
@@ -47,8 +57,8 @@
                   <p class="help-block">Max. 32MB</p>
                 </div>
 
-              <div>
-              <output id="Filelist"></output>
+              <div id="preview">
+                 
               </div>
               
 
@@ -59,7 +69,7 @@
               <!-- /.card-body -->
               <div class="card-footer">
                 <div class="float-right">
-                  <button type="button" class="btn btn-default"><i class="fas fa-pencil-alt"></i>{{__('Draft')}}</button>
+                  <button type="button" id="btn-drafts" class="btn btn-default"><i class="fas fa-pencil-alt"></i>{{__('Draft')}}</button>
                   <button type="submit" class="btn btn-primary"><i class="far fa-envelope"></i>{{__('Send')}}</button>
                 </div>
                 <button type="reset" class="btn btn-default" id="btn-discard"><i class="fas fa-times"></i>{{__('Discard')}}</button>
@@ -131,6 +141,7 @@
     });
  </script>
 <script>
+//contact autocompetion
     $(document).ready(function(){
 
     $('#email').keyup(function(){ 
@@ -156,7 +167,47 @@
         });  
 
     });
-    </script>
+  </script>
+
+
+<script>
+//save email to drafts
+    $(document).ready(function(){
+    $('#btn-drafts').click(function(){ 
+            var _token = $('input[name="_token"]').val();
+            var subject = $('input[name="subject"]').val();
+            var body = $('textarea[name="body"]').val();
+            $.ajax({
+              url:"{{ route('mail.store') }}",
+              method:"POST",
+              data:{subject:subject, body:body,  _token:_token},
+              success:function(data){
+                 $('input[name="subject"]').val() = '';
+                 $('textarea[name="body"]').val() = "";
+              }
+            });
+            
+        });
+
+        $(document).on('click', 'li', function(){  
+            $('#email').val($(this).text());  
+            $('#emailList').fadeOut();  
+        });  
+
+    });
+  </script>
+
+<script>
+//empty field when click on discard
+    $(document).ready(function(){
+        $('#btn-discard').click(function(){ 
+            $('input[name="_token"]').val() = '';
+            $('input[name="subject"]').val() = '';
+            $('textarea[name="body"]').val('');
+                
+        });
+    });
+  </script>
 
 <script>
   $(function () {
@@ -270,7 +321,10 @@
   });
 })(jQuery);
 </script>
-<script>
+
+
+<!-- <script>
+//handle file upload
 $(document).ready(function(){
 
     $('#file-input').click(function() //set file input value to null
@@ -281,11 +335,53 @@ $(document).ready(function(){
     $('#file-input').change(function() //detect file selection
     {
         var file_url = this.value;
-        var file_name = file_url.TrimEnd('\\');
-        alert(file_name);
+        // var file_name = file_url.TrimEnd('\\');
+        alert(file_url);
         // if file is valid 
         // display thumb and upload with progress bar
     })
 });
+</script> -->
+
+
+<script language="javascript" type="text/javascript">
+$(function () {
+    $("#file-input").change(function () {
+        if (typeof (FileReader) != "undefined") {
+            var dvPreview = $("#preview");
+            dvPreview.html("");
+            var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.jpg|.jpeg|.gif|.png|.bmp|.pdf|.docx)$/;
+            var regex_pdf = /^([a-zA-Z0-9\s_\\.\-:])+(.pdf|)$/;
+            var regex_docx = /^([a-zA-Z0-9\s_\\.\-:])+(.docx|)$/;
+            var regex_excel = /^([a-zA-Z0-9\s_\\.\-:])+(.xls|)$/;
+            $($(this)[0].files).each(function () {
+                var file = $(this);
+                if (regex.test(file[0].name.toLowerCase())) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        var img = $('<img /><span><i class="fas fa-times btn-rm"></i></span>');
+                        img.attr("style", "height:100px;width: 100px");
+                        img.attr("src", e.target.result);
+                        dvPreview.append(img);
+                    }
+                    reader.readAsDataURL(file[0]);
+                } else {
+                    alert(file[0].name + " is not a valid image file.");
+                    dvPreview.html("");
+                    return false;
+                }
+            });
+        } else {
+            alert("This browser does not support HTML5 FileReader.");
+        }
+    });
+});
+</script>
+
+<!-- //handle remove file  -->
+<script>
+  $('.btn-rm').click(function(){
+     alert('clicked');
+  });
 </script>
   @endsection

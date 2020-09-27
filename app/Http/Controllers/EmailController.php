@@ -63,6 +63,18 @@ class EmailController extends Controller
 
     }
 
+    public function store(Request $request)
+    {
+        Email::create([
+          'body' => $request->get('body'),
+          'subject' => $request->get('subject'),
+          'sender_addr' => Auth()->user()->email,
+          'receiver_addr' => $request->get('receiver_addr'),
+          'status' => 'drafts'
+
+      ]);
+    }
+
     /**
      * Send email.
      *
