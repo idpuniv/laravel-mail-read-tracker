@@ -19,11 +19,7 @@ Route::get('/', function () {
 
 
 
-Route::get('/autocomplete', 'CategoryController@index');
-
 Route::post('/autocomplete/fetch', 'AutocompleteController@fetch')->name('autocomplete.fetch');
-
-Route::get('/delete-multiple-category', ['as'=>'category.multiple-delete','uses'=>'CategoryController@deleteMultiple']);
 Route::get('file','FileController@create');
 Route::post('file','FileController@store');
 
@@ -43,7 +39,6 @@ Route::post('/image-upload', 'FileUpload@fileUpload')->name('imageUpload');
 
 Route::get('/{id}/webbug.php', 'EmailController@track');
 Route::get('/mail/test', 'EmailController@test')->name('test');
-Route::post('/upload', 'CategoryController@upload')->name('upload');
 Auth::routes(['verify' => true]);
 Auth::routes();
 

@@ -1,5 +1,5 @@
 <?php
-namespace App\Http\Controllers\API;
+namespace App\Http\Controllers\api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -90,7 +90,6 @@ class AuthController extends Controller
      */
     public function user(Request $request)
     {
-        echo 'hello api';
         return response()->json($request->user());
     }
 }
