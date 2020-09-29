@@ -12,7 +12,7 @@ class Report extends Model
     // protected $foreignKey = ['mail_id', 'receiver_addr'];
     // protected $timestamp = ['open_date'];
     // protected $attributes = ['clics']; 
-    protected $fillable = ['track_code', 'email_id','receiver_addr','status','clics','open_date'];
+    protected $fillable = ['track_code', 'email_id', 'user_id', 'receiver_addr','status','clics','open_date'];
 
 public function receiverUser()
 {

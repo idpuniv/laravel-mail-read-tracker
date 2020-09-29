@@ -19,10 +19,10 @@ class EmailController extends Controller
     public function sentEmail(Request $request)
     {
         return response()->json([
-            $request->user()->sent
-        ]);
+            'success' => 'true',
+            'data' => auth()->user()->sent
+        ], 200);
     }
-
     
     public function store(Request $request)
     {
@@ -76,7 +76,7 @@ class EmailController extends Controller
             $mail->send(); //send the the mail
 
             $mail = Email::create([
-                'sender_addr' => Auth()->user()->email,
+                'sender_addr' => auth()->user()->email,
                 'subject' => $request->get('subject'),
                 'body' => $request->get('body'),
                 'status' => 'sent',
@@ -84,15 +84,16 @@ class EmailController extends Controller
 
                 Report::create([
                     'email_id' => $mail->id,
+                    'user_id' => auth()->user()->id,
                     'receiver_addr' => $request->get('receiver_addr'),
                     'track_code' =>$track_code,
                     'status' => 'sent',
                 ]); 
 
             return response()->json([
-                'code' => '201',
+                'succes' => 'true',
                 'message' => 'email sent succufully',
-            ]);
+            ], 200);
 
             
 
@@ -109,35 +110,7 @@ class EmailController extends Controller
         }
     }
 
-    // public function store(Request $request)
-    // {
-    //     $addr = json_decode($request->get('receiver_addr')); //retreiver addresse
-
-        
-
-    //     if(Email::create([
-    //         'body' => $request->get('body'),
-    //         'subject' => $request->get('subject'),
-    //         'sender_addr' => Auth()->user()->email,
-    //         'receiver_addr' => $request->get('receiver_addr'),
-    //         'status' => 'drafts'
-  
-    //     ]))
-    //     {
-    //         return response()->json([
-    //             'code' => '201',
-    //             'message' => 'email created succefully'
-    //         ]);
-    //     }
-    //     else{
-    //         return response()->json([
-    //             'error' => [
-    //                 'code' => '500',
-    //                 'message' => 'server internal error.'
-    //             ]
-    //         ]);
-    //     }
-    // }
+    
 
     /**
      * Display the specified resource.
@@ -148,7 +121,7 @@ class EmailController extends Controller
     public function show(Request $request, $email)
     {
         return response()->json([
-           Email::where('sender_addr', $reqeust->user()->email)->where('email_id', $email)->get()
+           Email::where('sender_addr', auth()->user()->email)->where('email_id', $email)->get()
         ]);
     }
 
@@ -158,23 +131,36 @@ class EmailController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function report(Request $request)
+    public function report(Request $request, $email)
     {
         return response()->json([
-            $request->user()->report
-        ]);
+            'success' => 'true',
+            'data' => Report::where('email_id', $email)->where('user_id', auth()->user()->id)->get()
+        ], 200);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function emailreports(Request $request)
     {
-        //
+        $emails = auth()->user()->sent;
+        $emailreport = [] ;
+        foreach($emails as $email)
+        {
+            $emailreport = ['email' => $email, 'report' => $email->report];
+        }
+        
+        return response()->json([
+            'success' => 'true',
+            'data' => $emailreport
+        ], 200);
+    }
+
+
+    public function drafts(Request $request)
+    {
+        return response()->json([
+            'success' => 'true',
+            'data' => auth()->user()->drafts
+        ], 200);
     }
 
     /**
@@ -183,8 +169,22 @@ class EmailController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function delete($email)
     {
-        //
+        if(Email::find($email)->delete())
+        {
+            return response()->json([
+                'sucdess' => 'true',
+                'message' => 'data deleted succesfully',
+            ], 200);
+        }
+        else
+        {
+            return response()->json([
+                'sucdess' => 'false',
+                'message' => 'operation failed',
+            ], 401);
+        }
     }
+
 }

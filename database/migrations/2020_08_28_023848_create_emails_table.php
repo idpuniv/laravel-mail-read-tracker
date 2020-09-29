@@ -16,7 +16,6 @@ class CreateEmailsTable extends Migration
         Schema::create('emails', function (Blueprint $table) {
             $table->id();
             $table->char('sender_addr',100);
-            $table->json('receiver_addr');
             $table->string('subject');
             $table->text('body');
             $table->char('status', 10)->nullable();

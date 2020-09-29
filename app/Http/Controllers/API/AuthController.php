@@ -86,13 +86,13 @@ class AuthController extends Controller
     }
   
     /**
-     * Get the authenticated User
+     * Get the authenticated User 
      *
      * @return [json] user object
      */
-    public function all(Request $request)
+    public function details(Request $request)
     {
         // return response()->json($request->user());
-        return response()->json(User::all());
+        return response()->json(auth()->user());
     }
 }

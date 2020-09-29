@@ -140,6 +140,7 @@ class EmailController extends Controller
 
               Report::create([
                   'email_id' => $mail->id,
+                  'user_id' => auth()->user()->id,
                   'receiver_addr' => $request->get('receiver_addr'),
                   'track_code' =>$track_code,
                   'status' => 'sent',
