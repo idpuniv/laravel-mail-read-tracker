@@ -233,14 +233,14 @@ class EmailController extends Controller
         // foreach ($mails as $mail) {
         //   var_dump($mail->report);
         // }
-        return view('home', ['mails'=>Auth()->user()->sent,'box_name' => 'OutBox']);
+        return view('home', ['mails'=>Auth()->user()->sent,'box_name' => 'OutBox', "count" => Auth()->user()->sent->count()]);
         // var_dump(Auth()->user()->sentMail);
     }
 
     public function received()
     {
 
-         return view('home', ['mails'=>Auth()->user()->received,'box_name' => 'InBox']);
+         return view('home', ['mails'=>Auth()->user()->received,'box_name' => 'InBox', "count" => Auth()->user()->received->count()]);
     }
 
     public function read(Request $request)
@@ -249,7 +249,7 @@ class EmailController extends Controller
          $id = $request->route()->parameter('id');
          $mail = Email::find($id);
 
-         return view('mail.read', ['mail' => $mail,'box_name' => 'Read Box']);
+         return view('mail.read', ['mail' => $mail,'box_name' => 'Read Box', "count" => Auth()->user()->sent->count()]);
     }
 
     public function drafts()

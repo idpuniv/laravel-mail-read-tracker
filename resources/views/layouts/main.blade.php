@@ -6,6 +6,7 @@
   <title>Simplestmailer</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- <meta name="csrf-token" content="{{ csrf_token() }}"> -->
   <link href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}" rel="stylesheet"> 
   <link href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet">
   <link href="{{ asset('plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}" rel="stylesheet">
@@ -58,7 +59,9 @@
           <i class="far fa-user"></i>
         </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-          <span class="dropdown-item dropdown-header">{{Auth::user()->name}}</span>
+          <span class="dropdown-item dropdown-header">{{Auth::user()->name }}</span><br>
+          <span class="dropdown-item dropdown-header"> {{Auth::user()->email}}</span>
+         
           <div class="dropdown-divider"></div>
   
 
@@ -123,7 +126,7 @@
               <i class="nav-icon far fa-envelope"></i>
               <p>
               {{__('Sent')}}
-              <span class="badge badge-info right"></span>
+              <span class="badge badge-info right">{{$sentEmailCount}}</span>
               </p>
             </a>
           </li>

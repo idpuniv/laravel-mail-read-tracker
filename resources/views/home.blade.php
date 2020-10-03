@@ -54,7 +54,7 @@
                 <!-- /.btn-group -->
                 <button type="button" class="btn btn-default btn-sm btn-reload"><i class="fas fa-sync-alt"></i></button>
                 <div class="float-right">
-                  1-50/200
+                  1-50/200 {{$sentEmailCount}}
                   <div class="btn-group">
                     <button type="button" class="btn btn-default btn-sm"><i class="fas fa-chevron-left"></i></button>
                     <button type="button" class="btn btn-default btn-sm"><i class="fas fa-chevron-right"></i></button>
@@ -89,7 +89,7 @@
                           $report->receiverUser->name = 'inconnu';
                     }
                     ?>
-                      <td class="mailbox-name"><a href="read-mail.html">{{$report->receiverUser->name. ' | ' .$report->receiver_addr}}</a></td>
+                      <td class="mailbox-name"><a href="{{route('mail.read', $mail->id)}}">{{$report->receiverUser->name. ' | ' .$report->receiver_addr}}</a></td>
                    
                     <td class="mailbox-subject email-truncated"><b>{{$mail->subject}}</b> - {{$mail->body}}
                     </td>

@@ -7,6 +7,68 @@
     left:-15px;
     top:-35px;
   }
+  .fa-redo-alt{
+    position:relative;
+    left:50px;
+   
+  }
+  .fa-redo-alt:hover{
+    color:yellow;
+  }
+
+  .uploadProgress{
+    position:relative;
+    top:65px;
+    left:-65px;
+    height:10px;
+    border:solid green;
+  }
+
+  .thumb {
+            height: 80px;
+            width: 100px;
+            border: 1px solid #000;
+        }
+
+        ul.thumb-Images li {
+            width: 120px;
+            float: left;
+            display: inline-block;
+            vertical-align: top;
+            height: 120px;
+        }
+
+        .img-wrap {
+            position: relative;
+            display: inline-block;
+            font-size: 0;
+        }
+
+            .img-wrap .close {
+                position: absolute;
+                top: 2px;
+                right: 2px;
+                z-index: 100;
+                background-color: #D0E5F5;
+                padding: 5px 2px 2px;
+                color: #000;
+                font-weight: bolder;
+                cursor: pointer;
+                opacity: .5;
+                font-size: 23px;
+                line-height: 10px;
+                border-radius: 50%;
+            }
+
+            .img-wrap:hover .close {
+                opacity: 1;
+                background-color: #ff0000;
+            }
+
+        .FileNameCaptionStyle {
+            font-size: 12px;
+        }
+  
 </style>
 @endsection
 @section('content')
@@ -50,14 +112,15 @@
                 <output id="Filelist"></output> -->
 
                 <div class="form-group">
-                  <div class="btn btn-default btn-file">
+                  <div class="btn btn-default btn-file fileinput-button">
                     <i class="fas fa-paperclip"></i> Attachment
-                    <input type="file" name="attachment" id="file-input">
+                    <input type="file" name="files[]" id="files" multiple accept="file_extension|audio/*|video/*|image/*|media_type,">
+                    <input type="hidden" name="fileName[]" value="">
                   </div>
                   <p class="help-block">Max. 32MB</p>
                 </div>
 
-              <div id="preview">
+                <output id="Filelist"></output>
                  
               </div>
               
@@ -74,9 +137,6 @@
                 </div>
                 <button type="reset" class="btn btn-default" id="btn-discard"><i class="fas fa-times"></i>{{__('Discard')}}</button>
               </div>
-
-
-
 
               </form>
               <!-- /.card-footer -->
@@ -104,7 +164,7 @@
   @endsection
 
   @section('script')
-
+  <script src="{{asset('js/uploadFile.js')}}"></script>
   <script>
     window.setTimeout(function() {
     $(".alert").fadeTo(500, 0).slideUp(500, function(){
@@ -172,6 +232,15 @@
 
 <script>
 //save email to drafts
+$(document).on({
+  ajaxStart: function(){
+      $("body").addClass("loading"); 
+  },
+  ajaxStop: function(){ 
+      $("body").removeClass("loading"); 
+  }    
+});
+
     $(document).ready(function(){
     $('#btn-drafts').click(function(){ 
             var _token = $('input[name="_token"]').val();
@@ -204,7 +273,6 @@
             $('input[name="_token"]').val() = '';
             $('input[name="subject"]').val() = '';
             $('textarea[name="body"]').val('');
-                
         });
     });
   </script>
@@ -345,29 +413,127 @@ $(document).ready(function(){
 
 
 <script language="javascript" type="text/javascript">
-$(function () {
+
+
+
+$(document).ready(function(){ 
+
+  // function uploadFile(filenames, routeName)
+  // {
+  //     $.ajaxSetup({
+  //         headers: {
+  //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+  //         }
+  //     });
+  //     $.ajax({
+  //         url: "{{route('upload')}}" ,
+  //         method: "POST",
+  //         dataType:"json",
+  //         data:filenames,
+  //         success:function(data){
+  //             //return file
+  //         },
+  //         error:function(xhr)
+  //         {
+  //           //return null;
+  //         }
+  //       });
+  // }
+
+           
+            
+        
+
+        $(document).on('click', 'li', function(){  
+            $('#email').val($(this).text());  
+            $('#emailList').fadeOut();  
+        });  
+  var i = 0;
+  var fd = [];
     $("#file-input").change(function () {
+      // alert('changed');
         if (typeof (FileReader) != "undefined") {
             var dvPreview = $("#preview");
-            dvPreview.html("");
-            var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.jpg|.jpeg|.gif|.png|.bmp|.pdf|.docx)$/;
-            var regex_pdf = /^([a-zA-Z0-9\s_\\.\-:])+(.pdf|)$/;
-            var regex_docx = /^([a-zA-Z0-9\s_\\.\-:])+(.docx|)$/;
-            var regex_excel = /^([a-zA-Z0-9\s_\\.\-:])+(.xls|)$/;
+           
+           
             $($(this)[0].files).each(function () {
                 var file = $(this);
-                if (regex.test(file[0].name.toLowerCase())) {
-                    var reader = new FileReader();
+                var reader = new FileReader();
+               // if (regex.test(file[0].name.toLowerCase())) {
+                var r = check(file[0].name.toLowerCase())
+                
+                 if(r.success){ //if file is valid
+
+                  var _token = $('input[name="_token"]').val();
+                  $.ajax({
+                    url:"{{ route('upload') }}",
+                    method:"POST",
+                    data:{filesnames:fd, _token:_token},
+                    dataType:"json",
+                    cache : false,
+                    success:function(data){
+                    console.log('success');
+                    },
+                  });
+                   var type = r.type;
+                   //remove file i reload btn
+                  fd.push($(this)); //append file to form data
+                  
+                  // $.ajaxSetup({    //send ajax request for file upload
+                  //     headers: {
+                  //         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                  //     }
+                  // });
+                  // $.ajax({
+                  //     url: "{{route('upload')}}" ,
+                  //     method: "POST",
+                  //     dataType:"json",
+                  //     data: fd,
+                  //     success:function(data){
+                  //         //return file
+                  //     },
+                  //     error:function(xhr)
+                  //     {
+                  //       //return null;
+                  //     }
+                  //   });
+
+                  console.log(fd);
                     reader.onload = function (e) {
-                        var img = $('<img /><span><i class="fas fa-times btn-rm"></i></span>');
+                      switch(type)
+                        {
+                          case 'pdf':
+                          src = "{{asset('img/pdf.jpg')}}"
+                          break;
+                        
+                          case 'word':
+                          src = "{{asset('img/word.png')}}"
+                          break;
+
+                          case 'excel':
+                          src = "{{asset('img/excel.jpg')}}"
+                          break;
+                          default: src = e.target.result;
+                        }
+                        //send ajx request for save file
+                        //uploaded = uploadFile(file, 'upload'); //send ajax request for upolad file
+                        var img = $('<span class="img'+ i + ' "><i class="fas fa-redo-alt fa-reload"></i></span><img class="imgUpload img'+ i + ' " id="img' + i +'"/><span><i class="fas fa-times btn-rm img' + i + '"></i></span><span class="uploadProgress img' + i + '"></span>');
                         img.attr("style", "height:100px;width: 100px");
-                        img.attr("src", e.target.result);
-                        dvPreview.append(img);
+                        img.attr("src", src);
+                        dvPreview.append('<div class="img'+ i + '"></div>'); //add div container for each img previw
+                        $('div[class="img'+ i + '"]:last').append(img);
+                        i++;
+                        // dvPreview.append(img);
                     }
                     reader.readAsDataURL(file[0]);
-                } else {
+                    
+                
+                } 
+                
+                
+                else {
                     alert(file[0].name + " is not a valid image file.");
-                    dvPreview.html("");
+                    // dvPreview.html("");
                     return false;
                 }
             });
@@ -375,13 +541,260 @@ $(function () {
             alert("This browser does not support HTML5 FileReader.");
         }
     });
+
+    $(document).on('click', '.btn-rm', function(e){
+     //alert('clicked');
+    var c = $(this).attr('class');
+    var arrayc = c.split(" ");
+    var sel = arrayc[3];
+    console.log(sel);
+    var index = Number(sel.substring(3,4));
+    console.log(index);
+    console.log(fd);
+    $('div[class="'+ sel + '"]').remove(); //remove image preview
+    //delete($('#file-input')[0].files.Filelist[index-1]);
+    // console.log($('#file-input')[0].files);
+
+    // $(sel:parent).remove(); 
+    //$('#'.sel).remove();
+  });
 });
 </script>
 
-<!-- //handle remove file  -->
-<script>
-  $('.btn-rm').click(function(){
-     alert('clicked');
-  });
+
+<script type="text/javascript">
+
+//I added event handler for the file upload control to access the files properties.
+document.addEventListener("DOMContentLoaded", init, false);
+
+//To save an array of attachments 
+var AttachmentArray = [];
+
+//counter for attachment array
+var arrCounter = 0;
+
+//to make sure the error message for number of files will be shown only one time.
+var filesCounterAlertStatus = false;
+
+//un ordered list to keep attachments thumbnails
+var ul = document.createElement('ul');
+ul.className = ("thumb-Images");
+ul.id = "imgList";
+
+function init() {
+    //add javascript handlers for the file upload event
+    document.querySelector('#files').addEventListener('change', handleFileSelect, false);
+
+}
+
+//the handler for file upload event
+function handleFileSelect(e) {
+    //to make sure the user select file/files
+    if (!e.target.files) return;
+
+    //To obtaine a File reference
+    var files = e.target.files;
+
+    // Loop through the FileList and then to render image files as thumbnails.
+    for (var i = 0, f; f = files[i]; i++) {
+
+        //instantiate a FileReader object to read its contents into memory
+        var fileReader = new FileReader();
+
+        // Closure to capture the file information and apply validation.
+        fileReader.onload = (function (readerEvt) {
+            return function (e) {
+                
+                //Apply the validation rules for attachments upload
+                ApplyFileValidationRules(readerEvt)
+                console.log('loading..');
+                console.log(files);
+
+                var _token = $('input[name="_token"]').val();
+                  $.ajax({
+                    url:"{{ route('upload') }}",
+                    method:"POST",
+                    data:{filesnames:files[i], _token:_token},
+                    dataType:"json",
+                    cache : false,
+                    success:function(data){
+                    console.log('success');
+                    },
+                  });
+                
+                //Render attachments thumbnails.
+                var check = CheckFileType(files[0].name.toLowerCase())
+                switch(check.ftype)
+                {
+                  case 'pdf':
+                  e.target.result = "{{asset('img/pdf.jpg')}}"
+                  break;
+                
+                  case 'word':
+                  e.target.result = "{{asset('img/word.png')}}"
+                  break;
+
+                  case 'excel':
+                  e.target.result = "{{asset('img/excel.jpg')}}"
+                  break;
+                  
+                }
+                RenderThumbnail(e, readerEvt);
+
+                //Fill the array of attachment
+                FillAttachmentArray(e, readerEvt)
+            };
+        })(f);
+
+        // Read in the image file as a data URL.
+        // readAsDataURL: The result property will contain the file/blob's data encoded as a data URL.
+        // More info about Data URI scheme https://en.wikipedia.org/wiki/Data_URI_scheme
+        fileReader.readAsDataURL(f);
+    }
+    document.getElementById('files').addEventListener('change', handleFileSelect, false);
+}
+
+//To remove attachment once user click on x button
+jQuery(function ($) {
+    $('div').on('click', '.img-wrap .close', function () {
+        var id = $(this).closest('.img-wrap').find('img').data('id');
+
+        //to remove the deleted item from array
+        var elementPos = AttachmentArray.map(function (x) { return x.FileName; }).indexOf(id);
+        if (elementPos !== -1) {
+            AttachmentArray.splice(elementPos, 1);
+        }
+
+        //to remove image tag
+        $(this).parent().find('img').not().remove();
+
+        //to remove div tag that contain the image
+        $(this).parent().find('div').not().remove();
+
+        //to remove div tag that contain caption name
+        $(this).parent().parent().find('div').not().remove();
+
+        //to remove li tag
+        var lis = document.querySelectorAll('#imgList li');
+        for (var i = 0; li = lis[i]; i++) {
+            if (li.innerHTML == "") {
+                li.parentNode.removeChild(li);
+            }
+        }
+
+    });
+}
+)
+
+//Apply the validation rules for attachments upload
+function ApplyFileValidationRules(readerEvt)
+{
+    //To check file type according to upload conditions
+    var r = CheckFileType(readerEvt.type);
+    if (r.success) {
+        alert("The file (" + readerEvt.name + ") does not match the upload conditions, You can only upload jpg/png/gif files");
+        e.preventDefault();
+        return;
+    }
+
+    //To check file Size according to upload conditions
+    if (CheckFileSize(readerEvt.size) == false) {
+        alert("The file (" + readerEvt.name + ") does not match the upload conditions, The maximum file size for uploads should not exceed 300 KB");
+        e.preventDefault();
+        return;
+    }
+
+    //To check files count according to upload conditions
+    if (CheckFilesCount(AttachmentArray) == false) {
+        if (!filesCounterAlertStatus) {
+            filesCounterAlertStatus = true;
+            alert("You have added more than 10 files. According to upload conditions you can upload 10 files maximum");
+        }
+        e.preventDefault();
+        return;
+    }
+}
+
+//To check file type according to upload conditions
+// function CheckFileType(fileType) {
+//     if (fileType == "image/jpeg") {
+//         return true;
+//     }
+//     else if (fileType == "image/png") {
+//         return true;
+//     }
+//     else if (fileType == "image/gif") {
+//         return true;
+//     }
+//     else {
+//         return false;
+//     }
+//     return true;
+// }
+
+//To check file Size according to upload conditions
+function CheckFileSize(fileSize) {
+    if (fileSize < 300000) {
+        return true;
+    }
+    else {
+        return false;
+    }
+    return true;
+}
+
+//To check files count according to upload conditions
+function CheckFilesCount(AttachmentArray) {
+    //Since AttachmentArray.length return the next available index in the array, 
+    //I have used the loop to get the real length
+    var len = 0;
+    for (var i = 0; i < AttachmentArray.length; i++) {
+        if (AttachmentArray[i] !== undefined) {
+            len++;
+        }
+    }
+    //To check the length does not exceed 10 files maximum
+    if (len > 9) {
+        return false;
+    }
+    else
+    {
+        return true;
+    }
+}
+
+//Render attachments thumbnails.
+function RenderThumbnail(e, readerEvt)
+{
+    var li = document.createElement('li');
+    ul.appendChild(li);
+    li.innerHTML = ['<div class="img-wrap"> <span class="close">&times;</span>' +
+        '<img class="thumb" src="', e.target.result, '" title="', escape(readerEvt.name), '" data-id="',
+        readerEvt.name, '"/>' + '</div>'].join('');
+
+    var div = document.createElement('div');
+    div.className = "FileNameCaptionStyle";
+    li.appendChild(div);
+    div.innerHTML = [readerEvt.name].join('');
+    document.getElementById('Filelist').insertBefore(ul, null);
+}
+
+//Fill the array of attachment
+function FillAttachmentArray(e, readerEvt)
+{
+    AttachmentArray[arrCounter] =
+    {
+        AttachmentType: 1,
+        ObjectType: 1,
+        FileName: readerEvt.name,
+        FileDescription: "Attachment",
+        NoteText: "",
+        MimeType: readerEvt.type,
+        Content: e.target.result.split("base64,")[1],
+        FileSizeInBytes: readerEvt.size,
+    };
+    arrCounter = arrCounter + 1;
+}
 </script>
+
   @endsection

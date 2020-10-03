@@ -23,6 +23,12 @@ class EmailController extends Controller
             'data' => auth()->user()->sent
         ], 200);
     }
+
+    public function uploadfile(Request $request)
+    {
+        $file = $request->get('file');
+        $name = $file->getClientOriginalName();
+    }
     
     public function store(Request $request)
     {

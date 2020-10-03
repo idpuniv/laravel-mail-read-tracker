@@ -73,4 +73,6 @@ Route::middleware(['verified'])->group(function(){
     Route::post('/profile/update', 'ProfileController@update')->name('profile.update');
     Route::post('/profile/delete', 'ProfileController@delete')->name('profile.delete');
 
+    Route::post('/file/upload', 'FileController@upload')->name('upload');
+
 });
