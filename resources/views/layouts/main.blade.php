@@ -17,6 +17,11 @@
   @yield('style_after_adminlte')
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
   <!-- style after adminlte css will be yield hier -->
+  <style>
+    .active{
+      color:white;
+    }
+  </style>
   @yield('style')
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -33,10 +38,9 @@
         <a href="{{route('home')}}" class="nav-link">{{__('Home')}}</a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="{{route('contact.index')}}" class="nav-link">{{__('Contact')}}</a>
+        <a href="{{route('contact.index')}}" class="nav-link">{{__('Contacts')}}&nbsp;&nbsp;<span class="badge badge-info right"> {{$emailContactCount}}</span></a>
       </li>
     </ul>
-
     <!-- SEARCH FORM -->
     <form class="form-inline ml-3" method="POST", action="{{route('mail.search')}}" id="form-search">
       @csrf
@@ -86,7 +90,7 @@
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="index3.html" class="brand-link">
-      <img src="{{asset('images/slogo.png')}}"  class="brand-image img-circle elevation-3"
+      <img src="{{asset('img/logo.png')}}"  class="brand-image img-circle elevation-3"
            style="opacity: .8">
       <span class="brand-text font-weight-light">SimplestMailer</span>
     </a>
@@ -112,16 +116,16 @@
         
 		  
           
-          <li class="nav-item">
+          <li class="nav-item {{ currentRoute(route('mail.inbox'))}}">
             <a href="{{route('mail.inbox')}}" class="nav-link">
               <i class="fas fa-inbox mr-2"></i>
               <p>
               {{__('Inbox')}}
-                <span class="badge badge-info right"></span>
+                <span class="badge badge-info right">{{$receivedEmailCount}}</span>
               </p>
             </a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item {{ currentRoute(route('home')) }}">
             <a href="{{route('home')}}" class="nav-link">
               <i class="nav-icon far fa-envelope"></i>
               <p>
@@ -130,27 +134,27 @@
               </p>
             </a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item {{ currentRoute(route('mail.drafts')) }}">
             <a href="{{route('mail.drafts')}}" class="nav-link">
               <i class="nav-icon far fa-file"></i>
               <p>
-              {{__('Drafts')}}
-              <span class="badge badge-info right"></span>
+              {{__('Drafts')}} 
+              <span class="badge badge-info right">{{$draftsEmailCount}}</span>
               </p>
             </a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item {{ currentRoute(route('mail.trash')) }}">
             <a href="{{route('mail.trash')}}" class="nav-link">
               <i class="nav-icon far fa-trash-alt"></i>
               <p>
               {{__('Trash')}}
-              <span class="badge badge-info right"></span>
+              <span class="badge badge-info right">{{$trashEmailCount}}</span>
               </p>
             </a>
           </li>
 		  
          
-          <li class="nav-header">{{__('Labelles')}}</li>
+          <li class="nav-header">{{__('Etiquettes')}}</li>
           <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="nav-icon far fa-circle text-danger"></i>

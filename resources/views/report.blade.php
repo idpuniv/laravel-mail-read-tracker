@@ -17,7 +17,7 @@
                 <div class="col-12">
                   <h4>
                     <i class="fas fa-globe"></i> {{__($report->email->subject)}}.
-                    <small class="float-right">Date d'envoi: {{$report->email->created_at}}</small>
+                    <small class="float-right">Date d'envoi: <span class="badge fload-right bg-danger">{{time_ago($report->email->created_at)}}</span></small>
                   </h4>
                 </div>
                 <!-- /.col -->

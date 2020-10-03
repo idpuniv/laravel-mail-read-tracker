@@ -97,7 +97,7 @@
                   <!-- message area -->
                   <!-- message area -->
                   <!-- message area -->
-                    <textarea id="compose-textarea" name="body" class="form-control" required="true" style="height: 300px" >
+                    <textarea rows="10" id="compose-textarea" name="body" class="form-control" required="true" style="height: 300px" >
                      {{ isset($drafts) ? $drafts->body : '' }}
                     </textarea>
                 </div>
@@ -177,15 +177,13 @@
     $(document).ready(function () {
         $('#email').typeahead({
             source: function () {
-              $.ajaxSetup({
-    headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    }
-});
+              
+                    var _token = $('input[name="_token"]').val();
                     $.ajax({
                     url: "{{route('mail.suggest')}}",       
                     dataType: "json",
                     type: "POST",
+                    data:{_token:_token}
                     success: function (data) {
 						result($.map(data, function (item) {
 							return item;
@@ -250,6 +248,7 @@ $(document).on({
               url:"{{ route('mail.store') }}",
               method:"POST",
               data:{subject:subject, body:body,  _token:_token},
+              dataType:"json",
               success:function(data){
                  $('input[name="subject"]').val() = '';
                  $('textarea[name="body"]').val() = "";
@@ -734,7 +733,7 @@ function ApplyFileValidationRules(readerEvt)
 
 //To check file Size according to upload conditions
 function CheckFileSize(fileSize) {
-    if (fileSize < 300000) {
+    if (fileSize < 32000000) {
         return true;
     }
     else {

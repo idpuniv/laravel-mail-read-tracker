@@ -6,6 +6,9 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
+use App\Contact;
+use App\Report;
+use App\Drafts;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -68,20 +71,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Contact::class);
     }
 
-    public function contactEmail()
-    {
-        return Auth()->user()->contact()->get('email');
-    }
-    public function sentCount()
-    {
-        $count = $this->hasMany(Email::class, 'sender_addr','email')->where('status','sent');
-        $i = 0;
-        foreach($count as $model)
-         {
-             $i++;
-         }
-         return $i;
-    }
+    
+   public function trash()
+   {
+       return $this->hasMany(Email::class, 'sender_addr', 'email')->where('sender_addr', Auth()->user()->email);
+   }
 
 
     

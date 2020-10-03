@@ -1,13 +1,10 @@
 @extends('layouts.main')
 @section('content')
   <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
-    
-    <!-- Main content -->
-    <section class="content">
-      <div class="container-fluid">
+  
         <div class="row">
-          <div class="col-12">
+         <div class="col-2"></div>
+          <div class="col-8">
             <!-- Default box -->
             <div class="card">
 
@@ -120,11 +117,9 @@
             </div>
             <!-- /.card -->
           </div>
+          <div class="col-2"></div>
         </div>
-      </div>
-    </section>
-    <!-- /.content -->
-  </div>
+      
   <!-- delete account form -->
 
   <!-- <button type="button" class="btn btn-success swalDefaultSuccess">
@@ -138,7 +133,7 @@
 
 @section('script')
     <script>
-          $(document).ready(function(){
+          $(document).load(function(){
               $('.collapse').collapse('toggle');
           })
 

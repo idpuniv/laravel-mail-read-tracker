@@ -54,7 +54,7 @@
                 <!-- /.btn-group -->
                 <button type="button" class="btn btn-default btn-sm btn-reload"><i class="fas fa-sync-alt"></i></button>
                 <div class="float-right">
-                  1-50/200 {{$sentEmailCount}}
+                  1-50/{{$sentEmailCount}}
                   <div class="btn-group">
                     <button type="button" class="btn btn-default btn-sm"><i class="fas fa-chevron-left"></i></button>
                     <button type="button" class="btn btn-default btn-sm"><i class="fas fa-chevron-right"></i></button>
@@ -76,7 +76,7 @@
                     if($report->clics > 0 )
                       $color = 'green';
                   ?>
-                  <tr>
+                  <tr class="rowEmail">
                     <td>
                       <div class="icheck-primary">
                         <input type="checkbox" class="checkbox" value="" id="check{{++$i}}" data-id="{{$mail->id}}">
@@ -284,4 +284,6 @@ $(document).ready(function(){
   //  alert('changed');
 })
 </script>
+
+
 @endsection

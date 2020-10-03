@@ -1,4 +1,5 @@
 <?php
+
 if (!function_exists('currentRoute')) {
     function currentRoute(...$routes)
     {

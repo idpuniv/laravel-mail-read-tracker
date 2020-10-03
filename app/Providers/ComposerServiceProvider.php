@@ -22,7 +22,7 @@ class ComposerServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        view()->composer(['home', 'mail.sent', 'mail/sent'], 'App\Http\ViewComposers\UserEmailComposer');
+        view()->composer(['home', 'mail.sent', 'mail.read', 'mail.drafts', 'mail.trash', 'mail.create', 'contact.index', 'contact.create', 'profile', 'report'], 'App\Http\ViewComposers\UserEmailComposer');
        
     }
 }

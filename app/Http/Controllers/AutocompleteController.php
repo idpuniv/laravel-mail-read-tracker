@@ -18,7 +18,7 @@ class AutocompleteController extends Controller
                 ->where('user_id', Auth()->user()->id)
                 ->where('email', 'LIKE', "%{$query}%")
                 ->get();
-            if(!isEmpty($data))
+            if($data->isNotEmpty())
             {
                 $output = '<ul class="dropdown-menu" style="display:block; position:relative">';
                 foreach($data as $row)
