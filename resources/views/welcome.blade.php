@@ -1,4 +1,22 @@
 @extends('layouts.default')
+@section('style')
+<style type="text/css">
+    body{
+        background-image: url("img/bg.jpg");
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover; 
+
+    }
+    html, body{
+        color: white;
+    }
+    img{
+
+        opacity: 0.2;
+    }
+</style>
+@endsection
 @section('content')
     @if (Route::has('login'))
                     <div class="top-right links">

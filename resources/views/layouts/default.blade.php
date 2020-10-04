@@ -9,6 +9,7 @@
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
 
+
         <!-- Styles -->
         <style>
             html, body {
@@ -20,9 +21,7 @@
                 margin: 0;
             }
 
-            body{
-                background-image: url('/img/welcome_bak.jpg');
-            }
+            
 
             .full-height {
                 height: 100vh;
@@ -60,6 +59,7 @@
                 letter-spacing: .1rem;
                 text-decoration: none;
                 text-transform: uppercase;
+                color:white;
             }
 
             .m-b-md {
@@ -69,10 +69,15 @@
                 background-image:url('images/welcome_back2.jpg')
             }
         </style>
+
+        @yield('style')
+
     </head>
     <body>
         <div class="flex-center card position-ref full-height">
+
             @yield('content')
+
         </div>
     </body>
 </html>
