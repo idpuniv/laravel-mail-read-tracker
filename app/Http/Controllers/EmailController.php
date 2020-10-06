@@ -312,7 +312,7 @@ class EmailController extends Controller
       public function search(SearchRequest $request)
       {
 
-         $type = ['sent', 'drafts'];
+         $type = ['sent', 'drafts', 'trash'];
          $id = $request->get('type');
          if(in_array($request->get('type'), $type))
          {  // search in sent mail or drafts
@@ -320,21 +320,39 @@ class EmailController extends Controller
               $report = Auth()->user()->report; //get report contacts
               $emails = Auth()->user()->email; //get report contacts
              
-              $report = Report::where('receiver_addr', Auth()->user()->email)
-              ->Where('subject', 'like', '%' . Input::get('serach') . '%')->get()
-              ->orWhere('body', 'like', '%' . Input::get('serach') . '%')->get();
+              
+             
               
 
               if($id === 'sent')
               {
-                  $mails = Email::where('sender_addr', Auth::user()->email)->get();
-                  return view('mail.sent', ['mails'=>Auth()->user()->sent,'box_name' => 'OutBox']);
+
+                  $emails === Email::where('sender_addr', Auth()->user()->email)
+                                  ->where('status', 'sent')
+                                  ->where('subject', 'like', '%' . Input::get('serach') . '%')
+                                  ->orWhere('emails.id', '=', 'reports.id')
+                                  ->Where('reports.receiver_addr', 'like', '%' . Input::get('serach') . '%')->get();
+                   return view('mail.sent', ['mails'=>Auth()->user()->sent,'box_name' => 'OutBox']);
+
+
               }
-              else
+              elseif($id === 'drafts')
               {
-                $mails = Email::where('sender_addr', Auth::user()->email)->get();
+                $mails = Email::where('sender_addr', Auth::user()->email)
+                               ->where('status', 'drafts')
+                               ->where('subject', 'like', '%' . Input::get('serach') . '%')
+                               ->orWhere('body', 'like', '%' . Input::get('serach') . '%')->get();
                 return view('mail.drafts', ['mails'=>Auth()->user()->drafts,'box_name' => 'OutBox']);
               }
+
+              else
+              {
+                $mails = Email::onlyTrashed()
+                                  ->where('sender_addr', Auth::user()->email)
+                                  ->where('body', 'like', '%' . Input::get('serach') . '%')->get();
+                return view('mail.drafts', ['mails'=>Auth()->user()->drafts,'box_name' => 'OutBox']);
+              }
+              
         }
 
         else
