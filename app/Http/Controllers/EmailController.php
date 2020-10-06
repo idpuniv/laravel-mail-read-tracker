@@ -316,13 +316,10 @@ class EmailController extends Controller
          $id = $request->get('type');
          if(in_array($request->get('type'), $type))
          {  // search in sent mail or drafts
-              $contcts = Auth()->user()->contact; //get user contacts
-              $report = Auth()->user()->report; //get report contacts
-              $emails = Auth()->user()->email; //get report contacts
+              // $contcts = Auth()->user()->contact; //get user contacts
+              // $report = Auth()->user()->report; //get report contacts
+              // $emails = Auth()->user()->email; //get report contacts
              
-              
-             
-              
 
               if($id === 'sent')
               {
@@ -332,7 +329,8 @@ class EmailController extends Controller
                                   ->where('subject', 'like', '%' . Input::get('serach') . '%')
                                   ->orWhere('emails.id', '=', 'reports.id')
                                   ->Where('reports.receiver_addr', 'like', '%' . Input::get('serach') . '%')->get();
-                   return view('mail.sent', ['mails'=>Auth()->user()->sent,'box_name' => 'OutBox']);
+                 var_dump($emails);
+                   //return view('mail.sent', ['mails'=>Auth()->user()->sent,'box_name' => 'OutBox']);
 
 
               }
@@ -342,7 +340,8 @@ class EmailController extends Controller
                                ->where('status', 'drafts')
                                ->where('subject', 'like', '%' . Input::get('serach') . '%')
                                ->orWhere('body', 'like', '%' . Input::get('serach') . '%')->get();
-                return view('mail.drafts', ['mails'=>Auth()->user()->drafts,'box_name' => 'OutBox']);
+                echo "drafts";
+                //return view('mail.drafts', ['mails'=>Auth()->user()->drafts,'box_name' => 'OutBox']);
               }
 
               else
@@ -350,14 +349,16 @@ class EmailController extends Controller
                 $mails = Email::onlyTrashed()
                                   ->where('sender_addr', Auth::user()->email)
                                   ->where('body', 'like', '%' . Input::get('serach') . '%')->get();
-                return view('mail.drafts', ['mails'=>Auth()->user()->drafts,'box_name' => 'OutBox']);
+                echo "trashed";
+                //return view('mail.drafts', ['mails'=>Auth()->user()->drafts,'box_name' => 'OutBox']);
               }
               
         }
 
         else
         {
-          return view('mail.sent', ['mails'=>Auth()->user()->sent,'box_name' => 'OutBox']);
+          echo "'not defined";
+          //return view('mail.sent', ['mails'=>Auth()->user()->sent,'box_name' => 'OutBox']);
         }
 
          
