@@ -26,7 +26,7 @@ Route::prefix('/user')->group(function(){
 });
 Route::prefix('/emails')->group(function(){
     Route::get('/', 'api\EmailController@sentEmail')->middleware('auth:api');
-    Route::post('/', 'api\EmailController@store')->middleware('auth:api');
+    Route::post('/', 'api\EmailController@sendEmail')->middleware('auth:api');
     Route::get('/{email}', 'api\EmailController@show')->middleware('auth:api');
     Route::get('/reports', 'api\EmailController@report')->middleware('auth:api');
     Route::delete('/{email}', 'api\EmailController@delete')->middleware('auth:api');
