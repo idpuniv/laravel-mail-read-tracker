@@ -20,7 +20,7 @@ class EmailController extends Controller
     {
         return response()->json([
             'success' => 'true',
-            'data' => auth()->user()->sent
+            'data' => 'saved',
         ], 200);
     }
 
