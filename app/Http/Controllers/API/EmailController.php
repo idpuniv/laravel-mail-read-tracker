@@ -99,7 +99,7 @@ class EmailController extends Controller
             return response()->json([
                 'succes' => 'true',
                 'message' => 'email sent succufully',
-            ], 200);
+            ], 201);
 
             
 
