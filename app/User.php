@@ -47,35 +47,40 @@ class User extends Authenticatable implements MustVerifyEmail
     // }
     public function sent()
     {
-        return $this->hasMany(Email::class, 'sender_addr','email')->where('status','sent');
+        return $this->hasMany(Email::class, 'sender_addr','email')->where('status','sent')->orderBy('created_at', 'desc');
     }
 
     public function received()
     {
-        return $this->hasMany(Email::class, 'sender_addr', 'email')->where('status', 'received');
+        return $this->hasMany(Email::class, 'sender_addr', 'email')->where('status', 'received')->orderBy('created_at', 'desc');
     }
 
 
     public function drafts()
     {
-        return $this->hasMany(Email::class, 'sender_addr', 'email')->where('status', 'drafts');
+        return $this->hasMany(Email::class, 'sender_addr', 'email')->where('status', 'drafts')->orderBy('created_at', 'desc');
     }
 
     public function report()
     {
-        return $this->hasMany(Report::class, 'sender_addr', 'email');
+        return $this->hasMany(Report::class, 'sender_addr', 'email')->orderBy('created_at', 'desc');
     }
 
     public function contact()
     {
-        return $this->hasMany(Contact::class);
+        return $this->hasMany(Contact::class)->orderBy('created_at', 'desc');
     }
 
     
    public function trash()
    {
-       return $this->hasMany(Email::class, 'sender_addr', 'email')->where('sender_addr', Auth()->user()->email);
+       return $this->hasMany(Email::class, 'sender_addr', 'email')->withTrashed()->orderBy('created_at', 'desc');
    }
+
+//    public function emailreport()
+//    {
+//        return $this->hasMany();
+//    }
 
 
     

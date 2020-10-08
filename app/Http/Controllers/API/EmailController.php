@@ -1,6 +1,10 @@
 <?php
 
 namespace App\Http\Controllers\api;
+use App\Http\Resources\Email as EmailResource;
+use App\Http\Resources\Report as ReportResource;
+use App\Http\Resources\EmailCollection;
+use App\Http\Resources\ReportCollection;
 use App\Http\Controllers\Controller;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -18,11 +22,13 @@ class EmailController extends Controller
      */
     public function sentEmail(Request $request)
     {
-        return response()->json([
-            'success' => 'true',
-            'data' => auth()->user()->sent
-        ], 200);
+        // return response()->json([
+        //     'route' => $request->route()->getName()
+        // ]);
+        return new EmailCollection(Auth()->user()->sent);
     }
+
+    
 
     public function uploadfile(Request $request)
     {
@@ -79,8 +85,8 @@ class EmailController extends Controller
 
             $body .= '<b> Paul </b> <img src="'.$base_url.$track_code.'/webbug.php" width="1" height="1" border="0" alt=""/>';
             $mail->Body = $body;
-            $mail->send(); //send the the mail
 
+            $mail->send(); //send the the mail
             $mail = Email::create([
                 'sender_addr' => auth()->user()->email,
                 'subject' => $request->get('subject'),
@@ -139,26 +145,35 @@ class EmailController extends Controller
      */
     public function report(Request $request, $email)
     {
-        return response()->json([
-            'success' => 'true',
-            'data' => Report::where('email_id', $email)->where('user_id', auth()->user()->id)->get()
-        ], 200);
+        
+
+        return new ReportCollection(Report::where('email_id', $email)->where('user_id', auth()->user()->id)->get());
+        
+        // return response()->json([
+        //     'success' => 'true',
+        //     'data' => Report::where('email_id', $email)->where('user_id', auth()->user()->id)->get()
+        // ], 200);
     }
 
-    public function emailreports(Request $request)
-    {
-        $emails = auth()->user()->sent;
-        $emailreport = [] ;
-        foreach($emails as $email)
-        {
-            $emailreport = ['email' => $email, 'report' => $email->report];
-        }
-        
-        return response()->json([
-            'success' => 'true',
-            'data' => $emailreport
-        ], 200);
-    }
+    // public function emailreports(Request $request)
+    // {
+    //     $emails = auth()->user()->sent;
+    //     $thisreports = [] ;
+    //     $emailreports = [];
+    //     foreach($emails as $email)
+    //     {
+    //         foreach($email->report as $report)
+    //         {
+    //              $thisreports = $email->report;
+    //         }
+    //         $email->report = $thisreports;
+    //     }
+    //     return new EmailCollection($emails);
+    //     // return response()->json([
+    //     //     'success' => 'true',
+    //     //     'data' => $emails
+    //     // ], 200);
+    // }
 
 
     public function drafts(Request $request)

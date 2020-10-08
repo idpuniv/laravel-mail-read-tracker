@@ -32,6 +32,6 @@ Route::prefix('/emails')->group(function(){
     Route::delete('/{email}', 'api\EmailController@delete')->middleware('auth:api');
 });
 Route::prefix('/reports')->group(function(){
-    Route::get('/', 'api\EmailController@emailreports')->middleware('auth:api');
+    Route::get('/', 'api\EmailController@sentEmail')->middleware('auth:api')->name('mail.reports');
     Route::get('/{email}', 'api\EmailController@report')->middleware('auth:api');
 });

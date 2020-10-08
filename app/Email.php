@@ -11,7 +11,7 @@ class Email extends Model
 {
     use softDeletes;
     //
-    protected $fillable = ['sender_addr', 'subject', 'body'];
+    protected $fillable = ['sender_addr', 'subject', 'body', 'status'];
 
     public function user()
     {
