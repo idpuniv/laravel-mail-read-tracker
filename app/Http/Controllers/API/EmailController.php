@@ -130,11 +130,15 @@ class EmailController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request, $email)
+    public function reportByEmailID(Request $request, $email)
     {
-        return response()->json([
-           Email::where('sender_addr', auth()->user()->email)->where('email_id', $email)->get()
-        ]);
+        return new Reportcollection(Report::where('email_id', $email)->where('user_id', auth()->user()->id)->get());
+        
+    }
+    public function emailByID(Request $request, $email)
+    {
+        return new EmailResource(Email::find($email));
+        
     }
 
     /**
