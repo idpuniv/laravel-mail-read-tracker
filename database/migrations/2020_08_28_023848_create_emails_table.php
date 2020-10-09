@@ -17,7 +17,7 @@ class CreateEmailsTable extends Migration
             $table->id();
             $table->char('sender_addr',100);
             $table->string('subject');
-            $table->text('body');
+            $table->text('body')->nullable();
             $table->char('status', 10)->nullable();
             $table->enum('type', ['important', 'social', 'promotion'])->nullable();
             $table->softDeletes();
