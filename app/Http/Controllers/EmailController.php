@@ -281,7 +281,7 @@ class EmailController extends Controller
     public function SentDelete(Request $request){
 
          Email::whereIn('id',explode(",",$request->get('data')))->delete();
-         return redirect()->route('mail.sent');   
+         return redirect()->route('home');   
 
       }
     public function draftsDelete(Request $request){

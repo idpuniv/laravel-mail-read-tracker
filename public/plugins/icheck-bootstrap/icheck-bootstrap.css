@@ -30,6 +30,7 @@
     margin-bottom: 0;
     font-weight: normal;
     cursor: pointer;
+    transform: scale(0.9);
 }
 
 [class*="icheck-"] > input:first-child {
@@ -49,6 +50,7 @@
         position: absolute;
         width: 22px;
         height: 22px;
+        transform: scale(0.9);
         border: 1px solid #D3CFC8;
         border-radius: 0px;
         margin-left: -29px;

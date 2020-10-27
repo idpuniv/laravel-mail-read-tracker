@@ -1,0 +1,64 @@
+tr:hover{
+
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    
+}
+
+.checkbox{
+    width: 15px;
+    height: 15px;
+    border-color: red;
+}
+
+td{
+    border:solid 1px black;
+}
+
+.mailbox-star{
+    padding:2px;
+}
+
+table, tr{
+    max-width: 100%;
+    width:100%;
+    overflow-x: hidden;
+    scroll-behavior: unset;
+}
+
+tr{
+    max-height: 50px;
+}
+
+tr, td{
+    padding-bottom: 5px;
+    padding-top: 5px;
+    box-sizing: border-box;
+}
+
+/*responsive design*/
+
+
+/*android*/
+@media screen and (max-width: 800px)
+{
+
+    html, body{
+        font-size: 12px;
+
+    }
+    .flex1{
+        display: flex;
+    }
+    .flex2{
+        display: flex;
+    }
+
+    .mailbox-attachment{
+       display: none;
+    }
+}
+
+@media screen and (max-width: 1280px)
+{
+    /* Rédigez vos propriétés CSS ici */
+}
